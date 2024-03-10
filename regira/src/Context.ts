@@ -1,3 +1,11 @@
 import { createContext } from "react";
+import { Logged } from "./types";
 
-export default createContext(null)
+interface AuthContextType {
+    loggedInfo: {
+        logged: Logged,
+        logFn: (logged: Logged) => void
+    },
+}
+
+export default createContext<AuthContextType | undefined>(undefined)

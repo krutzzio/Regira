@@ -14,3 +14,9 @@ export type Logged = {
     name: string;
     id: number;
 };
+
+export type RegisterIn = {
+    name: string;
+    email: string;
+    password: string;
+}
