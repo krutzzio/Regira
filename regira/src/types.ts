@@ -2,7 +2,10 @@ export type Id = string | number;
 
 export type Column = {
     id: Id;
-    title: string;
+    name: string;
+    desc: string;
+    active: boolean;
+    userid: number;
 };
 
 export type LogIn = {

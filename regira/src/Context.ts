@@ -1,10 +1,11 @@
 import { createContext } from "react";
 import { Logged } from "./types";
 
-interface AuthContextType {
+type AuthContextType = {
     loggedInfo: {
-        logged: Logged,
-        logFn: (logged: Logged) => void
+        logged: Logged | undefined,
+        logFn: (logged: Logged) => void,
+        API_URL: string
     },
 }
 

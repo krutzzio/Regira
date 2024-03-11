@@ -1,8 +1,11 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { LogIn } from "../types"
 import { useNavigate } from "react-router-dom"
+import Context from "../Context"
 
 export default function Login() {
+
+    const { loggedInfo } = useContext(Context)
 
     const navigate = useNavigate()
 
@@ -19,17 +22,19 @@ export default function Login() {
         event.preventDefault()
 
         const API_LOGIN_URL = "http://localhost:3000/api/login"
-        const requestOptions = {
+
+        fetch(API_LOGIN_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
             body: JSON.stringify(logInfo)
-        };
-
-        fetch(API_LOGIN_URL, requestOptions)
+        })
             .then(resp => resp.json())
             .then(data => {
                 if (data.error) throw new Error(data.error)
-                navigate("/")
+                const lgInfo = { name: data.name, id: data.id }
+                loggedInfo.logFn(lgInfo)
+                navigate("/home")
             })
             .catch(err => console.log("ERROR EN EL LOGIN", err))
     }

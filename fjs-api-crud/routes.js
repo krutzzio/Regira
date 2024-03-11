@@ -13,7 +13,8 @@ const {
     updateItem,
     deleteItem,
     readItem,
-    readItems
+    readItems,
+    readItemsUser
 } = require('./generics'); // Importa les funcions per a realitzar operacions CRUD genèriques
 
 // Configuració de multer per gestionar la pujada de fitxers
@@ -37,6 +38,7 @@ const upload = multer({ storage: storage }).single('foto'); // Configura multer 
 // Middleware per verificar el JWT en la cookie
 const checkToken = (req, res, next) => {
     const token = req.cookies?.token; // Obté el token des de la cookie de la petició
+    console.log(token, req.cookies)
     if (!token) {
         return res.status(401).json({ error: 'Unauthorized' }); // Retorna error 401 si no hi ha cap token
     }
@@ -59,7 +61,7 @@ const checkToken = (req, res, next) => {
 
 
 // Operacions CRUD per als Projects
-router.get('/projects', checkToken, async (req, res) => await readItems(req, res, Project)); // Llegeix tots els projectes
+router.get('/projects', checkToken, async (req, res) => await readItemsUser(req, res, Project)); // Llegeix tots els projectes
 router.get('/projects/:id', async (req, res) => await readItem(req, res, Project)); // Llegeix un projecte específic
 router.put('/projects/:id', async (req, res) => await updateItem(req, res, Project)); // Actualitza un projecte
 router.delete('/projects/:id', async (req, res) => await deleteItem(req, res, Project)); // Elimina un projecte
@@ -99,7 +101,6 @@ router.post('/projects', checkToken, async (req, res, next) => {
             return res.status(500).json({ error: 'User no trobat' }); // Retorna error 500 si no es troba l'usuari
         }
         const { name, desc } = req.body;
-        const UserId = req.userId;
         const project = await user.createProject({ name, desc })
         res.status(201).json(project)
         /*upload(req, res, async function (err) { // Gestiona la pujada del fitxer
@@ -204,6 +205,15 @@ router.post('/register', async (req, res) => {
         res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
     }
 });
+
+
+router.get('/refresh', checkToken, async (req, res) => {
+    const user = await User.findByPk(req.userId); // Cerca l'usuari pel seu email
+    if (!user) {
+        return res.status(404).json({ error: 'User no trobat' }); // Retorna error 404 si l'usuari no es troba
+    }
+    return res.json({ id: user.id, name: user.name })
+})
 
 
 

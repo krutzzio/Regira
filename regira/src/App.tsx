@@ -2,26 +2,25 @@ import './App.css'
 import { useState } from 'react'
 import Context from './Context'
 import { Logged } from './types'
-import { Link } from 'react-router-dom'
-
+import { BrowserRouter } from 'react-router-dom'
+import { Router } from './Router'
+const API_URL = 'http://localhost:3000/api';
 
 function App() {
 
-  const [logged, setLogged] = useState<Logged>()
+  const [logged, setLogged] = useState<Logged | undefined>({ name: "", id: 9 })
 
   const logFn = (logged: Logged) => {
     setLogged(logged)
   }
-  const loggedInfo = { logged, logFn }
+  const loggedInfo = { logged: logged, logFn: logFn, API_URL }
 
 
   return (
     <Context.Provider value={{ loggedInfo }}>
-      <div className=''>
-        <h1 className='text-6xl'>Welcome to Regira</h1>
-        <Link to={"/login"}>Log in</Link>
-        <Link to={"/register"}>Create new profile</Link>
-      </div>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
     </Context.Provider>
   )
 }

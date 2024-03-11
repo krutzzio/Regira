@@ -1,6 +1,8 @@
 
 // Similar CRUD operations for Issue, User, Tag, and Comment...
 
+const { where } = require("sequelize");
+
 
 const createItem = async (req, res, Model) => {
     try {
@@ -20,7 +22,14 @@ const readItems = async (req, res, Model) => {
     }
 }
 
-//const readItemsUser = async (req, res, Model, user)
+const readItemsUser = async (req, res, Model) => {
+    try {
+        const item = await Model.findAll({ where: { userId: req.userId } })
+        res.json(item)
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
 
 const readItem = async (req, res, Model) => {
     try {
@@ -33,6 +42,8 @@ const readItem = async (req, res, Model) => {
         res.status(400).json({ error: error.message });
     }
 }
+
+
 
 const updateItem = async (req, res, Model) => {
     try {
@@ -65,5 +76,6 @@ module.exports = {
     updateItem,
     deleteItem,
     readItem,
-    readItems
+    readItems,
+    readItemsUser
 }  
