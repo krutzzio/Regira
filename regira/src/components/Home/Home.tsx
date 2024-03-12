@@ -1,11 +1,10 @@
 import React, { useContext, useEffect } from 'react'
 import { Link, Outlet } from 'react-router-dom'
-import Context from '../Context';
-import { useNavigate } from 'react-router-dom';
+import Context from '../../Context';
+import Header from './Header';
 
 export default function Home() {
 
-    const navigate = useNavigate()
     const { loggedInfo } = useContext(Context)
 
 
@@ -38,11 +37,7 @@ export default function Home() {
 
     return (
         <div className='flex flex-col justify-start h-screen'>
-            <header className='h-1/4 p-8 flex justify-between items-center'>
-                <Link to="/home">Home</Link>
-                <h1>{logged.name}</h1>
-                <button onClick={logout}>Log out</button>
-            </header>
+            <Header logged={logged} logout={logout} />
             <Outlet />
         </div>
     )

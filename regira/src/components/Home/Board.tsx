@@ -1,10 +1,10 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react"
-import { Column } from "../types"
+import { Column, Issue } from "../../types"
 import ColumnContainer from "./ColumnContainer"
 import { DndContext, DragEndEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core"
 import { SortableContext, arrayMove } from "@dnd-kit/sortable"
-import Context from "../Context"
-import Modal from "react-responsive-modal"
+import Context from "../../Context"
+import Modal from "./Modal"
 
 export default function Board() {
 
@@ -29,15 +29,8 @@ export default function Board() {
         },
     }))
 
-    const addColumn = () => {
-        const columnAdded: Column = {
-            id: generateId(),
-            name: `Project ${columns.length + 1}`,
-            desc: "Description project",
-            active: true,
-            userid: 1,
-        }
-        setColumns([...columns, columnAdded]);
+    const addColumn = (add: Column | Issue) => {
+        setColumns([...columns, project]);
     }
 
     const generateId = () => {
@@ -58,17 +51,18 @@ export default function Board() {
         })
     }
 
-    const closeModal = () => {setNewProject(false)}
     return (
         <div className="h-full p-8" ref={modalRef}>
-            <Modal open={newProject} onClose={closeModal} closeOnEsc center container={modalRef.current}>
-                <h2>Simple centered modal</h2>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                    pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
-                    hendrerit risus, sed porttitor quam.
-                </p>
-            </Modal>
+            <article className="m-8">
+                <button onClick={() => setNewProject(!newProject)}>ACTIVAR MODAL TEST</button>
+                {
+                    newProject
+                        ? <Modal type={"project"} addType={addColumn} />
+                        : <></>
+                }
+            </article>
+
+
             <DndContext sensors={sensors} onDragEnd={onDragEnd}>
                 <div className="w-full grid grid-cols-4 gap-4">
                     <SortableContext items={columnsId}>

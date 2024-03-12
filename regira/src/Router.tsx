@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom'
 import { Register } from './components/Register'
 import Login from './components/Login'
-import Board from './components/Board'
+import Board from './components/Home/Board'
 import Welcome from './components/Welcome'
-import Home from './components/Home'
+import Home from './components/Home/Home'
 
 export function Router() {
     return (
