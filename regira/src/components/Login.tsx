@@ -39,17 +39,20 @@ export default function Login() {
             .catch(err => console.log("ERROR EN EL LOGIN", err))
     }
     return (
-        <form action="POST" onSubmit={login} className="flex flex-col gap-2 p-8 rounded-lg bg-stone-900">
-            <article>
-                <label htmlFor="email">Email:</label>
-                <input className="block mt-2 px-2" type="email" name="email" id="emailInput" onChange={onChange} />
-            </article>
-            <article>
-                <label htmlFor="password">Password:</label>
-                <input className="block mt-2 px-2" type="password" name="password" id="passwordInput" onChange={onChange} />
-            </article>
-            <button className="bg-[#303030] rounded-sm">Log in</button>
-        </form>
-
+        <div className="h-screen flex justify-center items-center">
+            <form action="POST" onSubmit={login} className="w-64 flex flex-col gap-6 p-8 rounded bg-[#c0bbb1]">
+                <section className="flex flex-col gap-2">
+                    <article>
+                        <label htmlFor="email">Email:</label>
+                        <input className="block mt-2 px-2 py-1 w-full rounded-sm" type="email" name="email" id="emailInput" onChange={onChange} />
+                    </article>
+                    <article>
+                        <label htmlFor="password">Password:</label>
+                        <input className="block mt-2 px-2 py-1 w-full rounded-sm" type="password" name="password" id="passwordInput" onChange={onChange} />
+                    </article>
+                </section>
+                <button className="bg-[#95897a] hover:bg-[#887b6e] transition-colors py-2 text-white rounded-sm">Log in</button>
+            </form>
+        </div>
     )
 }

@@ -12,9 +12,9 @@ export default function Home() {
 
     const logout = () => {
         // Clear the authentication token cookie
+        window.location.href = "/login";
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Set the expiration date to a past date
         logFn({ name: "", id: 0 })
-        window.location.href = "/login";
         window.history.replaceState(null, "", "/")
     };
 

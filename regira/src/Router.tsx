@@ -8,9 +8,10 @@ import Home from './components/Home/Home'
 export function Router() {
     return (
         <Routes>
-            <Route path='/' element={<Welcome />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/login' element={<Login />} />
+            <Route path='/' element={<Welcome />}>
+                <Route path='/register' element={<Register />} />
+                <Route path='/login' element={<Login />} />
+            </Route>
             <Route path='/home' element={<Home />}>
                 <Route index element={<Board />} />
             </Route>

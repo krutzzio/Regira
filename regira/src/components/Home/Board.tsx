@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react"
-import { Column, Issue } from "../../types"
+import { Project, Issue } from "../../types"
 import ColumnContainer from "./ColumnContainer"
 import { DndContext, DragEndEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core"
 import { SortableContext, arrayMove } from "@dnd-kit/sortable"
@@ -8,7 +8,7 @@ import Modal from "./Modal"
 
 export default function Board() {
 
-    const [columns, setColumns] = useState<Column[]>([])
+    const [columns, setColumns] = useState<Project[]>([])
     const [newProject, setNewProject] = useState<boolean>(false)
     const modalRef = useRef(null)
     const { loggedInfo } = useContext(Context)
@@ -29,12 +29,8 @@ export default function Board() {
         },
     }))
 
-    const addColumn = (add: Column | Issue) => {
-        setColumns([...columns, project]);
-    }
-
-    const generateId = () => {
-        return Math.floor(Math.random() * 10001)
+    const addColumn = (newProject: Project) => {
+        setColumns([...columns, newProject]);
     }
 
     const onDragEnd = (event: DragEndEvent) => {
@@ -57,7 +53,7 @@ export default function Board() {
                 <button onClick={() => setNewProject(!newProject)}>ACTIVAR MODAL TEST</button>
                 {
                     newProject
-                        ? <Modal type={"project"} addType={addColumn} />
+                        ? <Modal type={"project"} addProject={addColumn} closeModal={() => setNewProject(false)} />
                         : <></>
                 }
             </article>

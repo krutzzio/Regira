@@ -3,11 +3,7 @@
 @tailwind utilities;
 
 :root {
-    background-color: #E2E2E2;
-    color: white;
-}
-
-input {
-    background-color: #303030;
-    border-radius: 0.15rem;
+    background-color: #E4E2dd;
+    color: black;
+    font-family: 'Aileron', sans-serif;
 }

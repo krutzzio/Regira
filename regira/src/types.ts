@@ -1,11 +1,11 @@
 export type Id = string | number;
 
-export type Column = {
-    id: Id;
-    name: string;
-    desc: string;
-    active: boolean;
-    userid: number;
+export type Project = {
+    id?: Id | undefined;
+    name: string | undefined;
+    desc: string | undefined;
+    active: boolean ;
+    userid?: number | undefined;
 };
 
 export type Issue = {
@@ -37,10 +37,17 @@ export type RegisterIn = {
 
 export type ModalType = {
     type: "project" | "issue";
-    addType: (add: Column | Issue) => void;
+    addProject?: (add: Project) => void;
+    addIssue?: (add: Issue) => void;
+    closeModal: () => void;
 }
 
 export type HeaderType = {
     logged: Logged;
     logout: () => void;
+}
+
+export type AddProjectType = {
+    addProject?: (add: Project) => void;
+    closeModal: () => void;
 }
