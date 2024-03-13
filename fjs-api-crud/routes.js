@@ -38,7 +38,6 @@ const upload = multer({ storage: storage }).single('foto'); // Configura multer 
 // Middleware per verificar el JWT en la cookie
 const checkToken = (req, res, next) => {
     const token = req.cookies?.token; // Obté el token des de la cookie de la petició
-    console.log(token, req.cookies)
     if (!token) {
         return res.status(401).json({ error: 'Unauthorized' }); // Retorna error 401 si no hi ha cap token
     }

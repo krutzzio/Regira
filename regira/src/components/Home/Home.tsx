@@ -19,18 +19,22 @@ export default function Home() {
     };
 
     useEffect(() => {
+        console.log("Hpoña")
         if (document.cookie.includes("token")) {
             fetch(API_URL + "/refresh", { credentials: "include" })
                 .then(e => e.json())
                 .then(data => {
                     if (data.error) {
-                        // api rebutja la cookie local, l'esborrem per mitjà de la funció logout()
+                        console.log(data)
                         logout();
                     } else {
-                        // api accepta la cookie, simulem login desant les dades rebudes a "loguejat"
+                        console.log(data)
                         logFn(data)
                     }
                 })
+                .catch(err => console.log(err))
+        } else {
+            logout()
         }
     }, [])
 

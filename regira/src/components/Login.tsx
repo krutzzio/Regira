@@ -40,7 +40,7 @@ export default function Login() {
     }
     return (
         <div className="h-screen flex justify-center items-center">
-            <form action="POST" onSubmit={login} className="w-64 flex flex-col gap-6 p-8 rounded bg-[#c0bbb1]">
+            <form action="POST" onSubmit={login} className="w-64 flex flex-col gap-6 p-8 rounded border- bg-[#c0bbb1]">
                 <section className="flex flex-col gap-2">
                     <article>
                         <label htmlFor="email">Email:</label>
@@ -51,7 +51,7 @@ export default function Login() {
                         <input className="block mt-2 px-2 py-1 w-full rounded-sm" type="password" name="password" id="passwordInput" onChange={onChange} />
                     </article>
                 </section>
-                <button className="bg-[#95897a] hover:bg-[#887b6e] transition-colors py-2 text-white rounded-sm">Log in</button>
+                <button className="bg-[#E4E2dd] hover:bg-[#887b6e] transition-colors py-2 rounded-sm">Log in</button>
             </form>
         </div>
     )
