@@ -1,7 +1,15 @@
+export type AuthContextType = {
+    loggedInfo: {
+        logged: Logged | undefined,
+        logFn: (logged: Logged) => void,
+        API_URL: string
+    },
+}
+
 export type Id = string | number;
 
 export type Project = {
-    id?: Id | undefined;
+    id: Id ;
     name: string | undefined;
     desc: string | undefined;
     active: boolean ;

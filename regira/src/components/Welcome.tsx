@@ -7,9 +7,9 @@ export default function Welcome() {
             <section>
                 <Outlet />
             </section>
-            <section className='w-full flex flex-col justify-center items-end gap-6'>
+            <section className='w-full flex flex-col justify-center items-start gap-6'>
                 <h1 className='text-6xl mr-8'>Welcome to <span className='font-bold'>Regira</span></h1>
-                <article className='flex justify-start gap-6 mr-8'>
+                <article className='flex gap-6 '>
                     <Link className='block' to={"/login"}>Log in</Link>
                     <Link className='block' to={"/register"}>Create new profile</Link>
                 </article>

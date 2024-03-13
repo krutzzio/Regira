@@ -96,7 +96,6 @@ router.delete('/users/:id', async (req, res) => await deleteItem(req, res, User)
 router.post('/projects', checkToken, async (req, res, next) => {
     try {
         const user = await User.findByPk(req.userId); // Cerca l'usuari pel seu ID
-        console.log("CONSOLE:LOG AQUI:", user.id)
         if (!user) {
             return res.status(500).json({ error: 'User no trobat' }); // Retorna error 500 si no es troba l'usuari
         }

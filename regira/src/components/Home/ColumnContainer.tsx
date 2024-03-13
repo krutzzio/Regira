@@ -1,10 +1,10 @@
 import { useSortable } from "@dnd-kit/sortable";
-import { Column } from "../../types"
+import { Project } from "../../types"
 import { CSS } from "@dnd-kit/utilities"
 import { useState } from "react";
 
 interface Props {
-  column: Column;
+  column: Project;
 }
 
 
