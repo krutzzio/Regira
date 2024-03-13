@@ -40,7 +40,7 @@ export default function Login() {
     }
     return (
         <div className="h-screen flex justify-center items-center">
-            <form action="POST" onSubmit={login} className="w-64 flex flex-col gap-6 p-8 rounded border- bg-[#c0bbb1]">
+            <form action="POST" onSubmit={login} className="w-64 flex flex-col gap-6 p-8 rounded bg-[#c0bbb1]">
                 <section className="flex flex-col gap-2">
                     <article>
                         <label htmlFor="email">Email:</label>

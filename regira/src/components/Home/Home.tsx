@@ -7,7 +7,6 @@ export default function Home() {
 
     const { loggedInfo } = useContext(Context)
 
-
     const { logged, logFn, API_URL } = loggedInfo
 
     const logout = () => {
@@ -19,16 +18,13 @@ export default function Home() {
     };
 
     useEffect(() => {
-        console.log("Hpoña")
         if (document.cookie.includes("token")) {
             fetch(API_URL + "/refresh", { credentials: "include" })
                 .then(e => e.json())
                 .then(data => {
                     if (data.error) {
-                        console.log(data)
                         logout();
                     } else {
-                        console.log(data)
                         logFn(data)
                     }
                 })

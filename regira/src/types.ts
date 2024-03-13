@@ -59,3 +59,7 @@ export type AddProjectType = {
     addProject?: (add: Project) => void;
     closeModal: () => void;
 }
+
+export type ProjectContainer = {
+    project: Project
+}
