@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { RegisterIn } from "../types"
+import { RegisterIn } from "../../types"
 import { useNavigate } from "react-router-dom"
 
 export function Register() {

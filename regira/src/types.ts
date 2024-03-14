@@ -19,10 +19,11 @@ export type Project = {
 export type Issue = {
     id: Id;
     title: string;
+    desc: string;
     type: "bug" | "feature" | "task";
     priority: "low" | "medium" | "high";
     state: "open" | "in_progress" | "resolved" | "closed";
-    projectId: number;
+    projectId:  Id;
     authorId: number;
     assigneeId: number;
 }
@@ -62,4 +63,8 @@ export type AddProjectType = {
 
 export type ProjectContainer = {
     project: Project
+}
+
+export type StateContaierType = {
+    title: string;
 }

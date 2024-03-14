@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { useContext, useEffect } from 'react'
+import { Outlet } from 'react-router-dom'
 import Context from '../../Context';
 import Header from './Header';
 
@@ -11,7 +11,7 @@ export default function Home() {
 
     const logout = () => {
         // Clear the authentication token cookie
-        window.location.href = "/login";
+        window.location.href = "/";
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Set the expiration date to a past date
         logFn({ name: "", id: 0 })
         window.history.replaceState(null, "", "/")

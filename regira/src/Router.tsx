@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom'
-import { Register } from './components/Register'
-import Login from './components/Login'
-import Board from './components/Home/Board/Board'
-import Welcome from './components/Welcome'
+import { Register } from './components/Welcome/Register'
+import Login from './components/Welcome/Login'
+import ProjectsBoard from './components/Home/Board/ProjectsBoard'
+import Welcome from './components/Welcome/Welcome'
 import Home from './components/Home/Home'
 import Project from './components/Home/Project/Project'
 
@@ -11,10 +11,10 @@ export function Router() {
         <Routes>
             <Route path='/' element={<Welcome />}>
                 <Route path='/register' element={<Register />} />
-                <Route path='/login' element={<Login />} />
+                <Route index element={<Login />} />
             </Route>
             <Route path='/home' element={<Home />}>
-                <Route index element={<Board />} />
+                <Route index element={<ProjectsBoard />} />
                 <Route path='project/:id' element={<Project />} />
             </Route>
         </Routes>

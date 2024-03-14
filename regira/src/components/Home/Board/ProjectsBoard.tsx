@@ -4,7 +4,7 @@ import ColumnContainer from "./ColumnContainer"
 //import Context from "../../Context"
 import Modal from "../../Modal/Modal"
 
-export default function Board() {
+export default function ProjectsBoard() {
 
     const [columns, setColumns] = useState<Project[]>([])
     const [newProject, setNewProject] = useState<boolean>(false)

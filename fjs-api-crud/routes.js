@@ -59,112 +59,13 @@ const checkToken = (req, res, next) => {
 // CRUD
 
 
-// Operacions CRUD per als Projects
-router.get('/projects', checkToken, async (req, res) => await readItemsUser(req, res, Project)); // Llegeix tots els projectes
-router.get('/projects/:id', async (req, res) => await readItem(req, res, Project)); // Llegeix un projecte específic
-router.put('/projects/:id', async (req, res) => await updateItem(req, res, Project)); // Actualitza un projecte
-router.delete('/projects/:id', async (req, res) => await deleteItem(req, res, Project)); // Elimina un projecte
+//USERS
 
 
-// Operacions CRUD per als Issues
-router.get('/comments', async (req, res) => await readItems(req, res, Issue)); // Llegeix tots els bolets
-router.get('/comments/:id', async (req, res) => await readItem(req, res, Issue)); // Llegeix un bolet específic
-router.put('/comments/:id', async (req, res) => await updateItem(req, res, Issue)); // Actualitza un bolet
-router.delete('/comments/:id', async (req, res) => await deleteItem(req, res, Issue)); // Elimina un bolet
-
-// Operacions CRUD per als Issues
-router.get('/issues', async (req, res) => await readItems(req, res, Issue)); // Llegeix tots els bolets
-router.get('/issues/:id', async (req, res) => await readItem(req, res, Issue)); // Llegeix un bolet específic
-router.put('/issues/:id', async (req, res) => await updateItem(req, res, Issue)); // Actualitza un bolet
-router.delete('/issues/:id', async (req, res) => await deleteItem(req, res, Issue)); // Elimina un bolet
-
-// Operacions CRUD per a les Etiquetes
-router.post('/tags', async (req, res) => await createItem(req, res, Tag)); // Crea una etiqueta
-router.get('/tags', async (req, res) => await readItems(req, res, Tag)); // Llegeix totes les etiquetes
-router.get('/tags/:id', async (req, res) => await readItem(req, res, Tag)); // Llegeix una etiqueta específica
-router.put('/tags/:id', async (req, res) => await updateItem(req, res, Tag)); // Actualitza una etiqueta
-router.delete('/tags/:id', async (req, res) => await deleteItem(req, res, Tag)); // Elimina una etiqueta
-
-// Operacions CRUD per als Usuaris
-router.get('/users', async (req, res) => await readItems(req, res, User)); // Llegeix tots els usuaris
-router.get('/users/:id', async (req, res) => await readItem(req, res, User)); // Llegeix un usuari específic
-router.put('/users/:id', async (req, res) => await updateItem(req, res, User)); // Actualitza un usuari
-router.delete('/users/:id', async (req, res) => await deleteItem(req, res, User)); // Elimina un usuari
-
-// Endpoint per crear un bolet (amb foto) (afegit checkToken)
-router.post('/projects', checkToken, async (req, res, next) => {
-    try {
-        const user = await User.findByPk(req.userId); // Cerca l'usuari pel seu ID
-        if (!user) {
-            return res.status(500).json({ error: 'User no trobat' }); // Retorna error 500 si no es troba l'usuari
-        }
-        const { name, desc } = req.body;
-        const project = await user.createProject({ name, desc })
-        res.status(201).json(project)
-        /*upload(req, res, async function (err) { // Gestiona la pujada del fitxer
-            if (err) {
-                return res.status(500).json({ error: err.message }); // Retorna error 500 si hi ha algun error en la pujada del fitxer
-            }
-            if (req.file) {
-                req.body.foto = req.file.filename; // Assigna el nom del fitxer pujat al camp 'foto'
-            }
-
-            const item = await Bolet.create(req.body); // Crea un nou bolet amb les dades rebudes
-            res.status(201).json(item); // Retorna l'objecte del bolet creat amb el codi d'estat 201 (Creat)
-        });*/
-
-    } catch (error) {
-        res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
-    }
-});
-
-
-// Endpoint per vincular una etiqueta a un bolet
-router.post('/bolets/:boletId/tags/:tagId', async (req, res) => {
-    try {
-        const bolet = await Bolet.findByPk(req.params.boletId); // Cerca el bolet pel seu ID
-        const tag = await Tag.findByPk(req.params.tagId); // Cerca l'etiqueta pel seu ID
-        if (!bolet || !tag) {
-            return res.status(404).json({ error: 'Bolet o Tag no trobats' }); // Retorna error 404 si el bolet o l'etiqueta no es troben
-        }
-        await bolet.addTag(tag); // Afegeix l'etiqueta al bolet
-        res.json({ message: 'Tag linkat' }); // Retorna missatge d'èxit
-    } catch (error) {
-        res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
-    }
-});
-
-
-// Endpoint per obtenir totes les etiquetes per a un bolet
-router.get('/bolets/:boletId/tags', async (req, res) => {
-    try {
-        const bolet = await Bolet.findByPk(req.params.boletId); // Cerca el bolet pel seu ID
-        if (!bolet) {
-            return res.status(404).json({ error: 'Bolet no trobat' }); // Retorna error 404 si el bolet no es troba
-        }
-        const tags = await bolet.getTags(); // Obté totes les etiquetes associades al bolet
-        res.json(tags); // Retorna les etiquetes
-    } catch (error) {
-        res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
-    }
-});
-
-// Endpoint per obtenir els bolets per a una etiqueta
-router.get('/tags/:tagtId/bolets', async (req, res) => {
-    try {
-        const tag = await Tag.findByPk(req.params.tagId, { include: Bolet }); // Cerca l'etiqueta pel seu ID, incloent els bolets associats
-        if (!tag) {
-            return res.status(404).json({ error: 'Tag no trobat' }); // Retorna error 404 si l'etiqueta no es troba
-        }
-        res.json(tag.bolets); // Retorna els bolets associats a l'etiqueta
-    } catch (error) {
-        res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
-    }
-});
-
-
-// LOGIN I REGISTRE
-
+router.get('/users', async (req, res) => await readItems(req, res, User));
+router.get('/users/:id', async (req, res) => await readItem(req, res, User));
+router.put('/users/:id', async (req, res) => await updateItem(req, res, User));
+router.delete('/users/:id', async (req, res) => await deleteItem(req, res, User));
 
 // Endpoint per iniciar sessió d'un usuari
 router.post('/login', async (req, res) => {
@@ -204,7 +105,6 @@ router.post('/register', async (req, res) => {
     }
 });
 
-
 router.get('/refresh', checkToken, async (req, res) => {
     const user = await User.findByPk(req.userId); // Cerca l'usuari pel seu email
     if (!user) {
@@ -215,5 +115,112 @@ router.get('/refresh', checkToken, async (req, res) => {
 
 
 
+//PROJECTS
+
+
+router.get('/projects', checkToken, async (req, res) => await readItemsUser(req, res, Project)); 
+router.get('/projects/:id', async (req, res) => await readItem(req, res, Project));
+router.put('/projects/:id', async (req, res) => await updateItem(req, res, Project));
+router.delete('/projects/:id', async (req, res) => await deleteItem(req, res, Project));
+
+// Endpoint per crear un project (amb foto) (afegit checkToken)
+router.post('/projects', checkToken, async (req, res, next) => {
+    try {
+        const user = await User.findByPk(req.userId); // Cerca l'usuari pel seu ID
+        if (!user) {
+            return res.status(500).json({ error: 'User no trobat' }); // Retorna error 500 si no es troba l'usuari
+        }
+        const { name, desc } = req.body;
+        const project = await user.createProject({ name, desc })
+        res.status(201).json(project)
+        
+        //UPLOAD PHOTO
+        /*upload(req, res, async function (err) { // Gestiona la pujada del fitxer
+            if (err) {
+                return res.status(500).json({ error: err.message }); // Retorna error 500 si hi ha algun error en la pujada del fitxer
+            }
+            if (req.file) {
+                req.body.foto = req.file.filename; // Assigna el nom del fitxer pujat al camp 'foto'
+            }
+
+            const item = await Bolet.create(req.body); // Crea un nou bolet amb les dades rebudes
+            res.status(201).json(item); // Retorna l'objecte del bolet creat amb el codi d'estat 201 (Creat)
+        });*/
+
+    } catch (error) {
+        res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
+    }
+});
+
+
+//ISSUES
+
+
+router.get('/issues', async (req, res) => await readItems(req, res, Issue)); 
+router.get('/issues/:id', async (req, res) => await readItem(req, res, Issue)); 
+router.put('/issues/:id', async (req, res) => await updateItem(req, res, Issue)); 
+router.delete('/issues/:id', async (req, res) => await deleteItem(req, res, Issue)); 
+
+
+//COMMENTS
+
+
+router.get('/comments', async (req, res) => await readItems(req, res, Issue)); 
+router.get('/comments/:id', async (req, res) => await readItem(req, res, Issue)); 
+router.put('/comments/:id', async (req, res) => await updateItem(req, res, Issue));
+router.delete('/comments/:id', async (req, res) => await deleteItem(req, res, Issue)); 
+
+
+//TAGS
+
+
+router.post('/tags', async (req, res) => await createItem(req, res, Tag)); 
+router.get('/tags', async (req, res) => await readItems(req, res, Tag));
+router.get('/tags/:id', async (req, res) => await readItem(req, res, Tag)); 
+router.put('/tags/:id', async (req, res) => await updateItem(req, res, Tag)); 
+router.delete('/tags/:id', async (req, res) => await deleteItem(req, res, Tag)); 
+
+
+// Endpoint per vincular una etiqueta a un bolet
+router.post('/bolets/:boletId/tags/:tagId', async (req, res) => {
+    try {
+        const bolet = await Bolet.findByPk(req.params.boletId); // Cerca el bolet pel seu ID
+        const tag = await Tag.findByPk(req.params.tagId); // Cerca l'etiqueta pel seu ID
+        if (!bolet || !tag) {
+            return res.status(404).json({ error: 'Bolet o Tag no trobats' }); // Retorna error 404 si el bolet o l'etiqueta no es troben
+        }
+        await bolet.addTag(tag); // Afegeix l'etiqueta al bolet
+        res.json({ message: 'Tag linkat' }); // Retorna missatge d'èxit
+    } catch (error) {
+        res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
+    }
+});
+
+// Endpoint per obtenir totes les etiquetes per a un bolet
+router.get('/bolets/:boletId/tags', async (req, res) => {
+    try {
+        const bolet = await Bolet.findByPk(req.params.boletId); // Cerca el bolet pel seu ID
+        if (!bolet) {
+            return res.status(404).json({ error: 'Bolet no trobat' }); // Retorna error 404 si el bolet no es troba
+        }
+        const tags = await bolet.getTags(); // Obté totes les etiquetes associades al bolet
+        res.json(tags); // Retorna les etiquetes
+    } catch (error) {
+        res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
+    }
+});
+
+// Endpoint per obtenir els bolets per a una etiqueta
+router.get('/tags/:tagtId/bolets', async (req, res) => {
+    try {
+        const tag = await Tag.findByPk(req.params.tagId, { include: Bolet }); // Cerca l'etiqueta pel seu ID, incloent els bolets associats
+        if (!tag) {
+            return res.status(404).json({ error: 'Tag no trobat' }); // Retorna error 404 si l'etiqueta no es troba
+        }
+        res.json(tag.bolets); // Retorna els bolets associats a l'etiqueta
+    } catch (error) {
+        res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
+    }
+});
 
 module.exports = router; // Exporta el router amb les rutes definides
