@@ -11,7 +11,7 @@ export default function Project() {
   const API_ISSUES_URL = `http://localhost:3000/api/issues/project/${id}`
 
 
-  const [stateColumns, setStateColumns] = useState(["OPEN", "IN PROGESS", "RESOLVED", "CLOSED"])
+  const [stateColumns, setStateColumns] = useState(["open", "in_progress", "resolved", "closed"])
   const [issues, setIssues] = useState<Issue[]>()
 
   useEffect(() => {
@@ -20,7 +20,15 @@ export default function Project() {
       .then(data => setIssues(data))
   }, [])
 
-  useEffect(() => { console.log(issues) }, [issues])
+  useEffect(() => {
+    console.log(issues)
+
+    if (!issues) return
+
+    const filterIssues = stateColumns.map(state => issues.filter(issue => issue.state == state))
+    console.log(filterIssues)
+ 
+  }, [issues])
 
   const handleDragEnd = () => {
 
