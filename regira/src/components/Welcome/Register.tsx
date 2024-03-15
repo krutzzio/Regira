@@ -31,7 +31,7 @@ export function Register() {
             .then(resp => resp.json())
             .then(data => {
                 if (data.error) throw new Error(data.error)
-                navigate("/login")
+                navigate("/")
             })
             .catch(err => console.log("ERROR EN EL LOGIN", err))
     }

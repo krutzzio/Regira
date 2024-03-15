@@ -114,14 +114,13 @@ router.get('/refresh', checkToken, async (req, res) => {
 })
 
 
-
 //PROJECTS
 
 
-router.get('/projects', checkToken, async (req, res) => await readItemsUser(req, res, Project)); 
-router.get('/projects/:id', async (req, res) => await readItem(req, res, Project));
-router.put('/projects/:id', async (req, res) => await updateItem(req, res, Project));
-router.delete('/projects/:id', async (req, res) => await deleteItem(req, res, Project));
+router.get('/projects', checkToken, async (req, res) => await readItemsUser(req, res, Project));
+router.get('/projects/:id', checkToken, async (req, res) => await readItem(req, res, Project));
+router.put('/projects/:id', checkToken, async (req, res) => await updateItem(req, res, Project));
+router.delete('/projects/:id', checkToken, async (req, res) => await deleteItem(req, res, Project));
 
 // Endpoint per crear un project (amb foto) (afegit checkToken)
 router.post('/projects', checkToken, async (req, res, next) => {
@@ -133,20 +132,6 @@ router.post('/projects', checkToken, async (req, res, next) => {
         const { name, desc } = req.body;
         const project = await user.createProject({ name, desc })
         res.status(201).json(project)
-        
-        //UPLOAD PHOTO
-        /*upload(req, res, async function (err) { // Gestiona la pujada del fitxer
-            if (err) {
-                return res.status(500).json({ error: err.message }); // Retorna error 500 si hi ha algun error en la pujada del fitxer
-            }
-            if (req.file) {
-                req.body.foto = req.file.filename; // Assigna el nom del fitxer pujat al camp 'foto'
-            }
-
-            const item = await Bolet.create(req.body); // Crea un nou bolet amb les dades rebudes
-            res.status(201).json(item); // Retorna l'objecte del bolet creat amb el codi d'estat 201 (Creat)
-        });*/
-
     } catch (error) {
         res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
     }
@@ -156,29 +141,44 @@ router.post('/projects', checkToken, async (req, res, next) => {
 //ISSUES
 
 
-router.get('/issues', async (req, res) => await readItems(req, res, Issue)); 
-router.get('/issues/:id', async (req, res) => await readItem(req, res, Issue)); 
-router.put('/issues/:id', async (req, res) => await updateItem(req, res, Issue)); 
-router.delete('/issues/:id', async (req, res) => await deleteItem(req, res, Issue)); 
+router.get('/issues', async (req, res) => await readItems(req, res, Issue));
+router.get('/issues/:id', async (req, res) => await readItem(req, res, Issue));
+router.put('/issues/:id', async (req, res) => await updateItem(req, res, Issue));
+router.delete('/issues/:id', async (req, res) => await deleteItem(req, res, Issue));
+
+router.post('/issues/project/:projectId', checkToken, async (req, res, next) => {
+    try {
+        const project = await Project.findByPk(req.params.projectId); // Cerca l'usuari pel seu ID
+        const user = await User.findByPk(req.userId)
+        if (!project) {
+            return res.status(500).json({ error: 'Projecte no trobat' }); // Retorna error 500 si no es troba l'usuari
+        }
+        const { title, desc, type, priority, state } = req.body;
+        const issue = await project.createIssue({ title, desc, type, priority, state, authorId: user.id, assigneeId: user.id })
+        res.status(201).json(issue)
+    } catch (error) {
+        res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
+    }
+});
 
 
 //COMMENTS
 
 
-router.get('/comments', async (req, res) => await readItems(req, res, Issue)); 
-router.get('/comments/:id', async (req, res) => await readItem(req, res, Issue)); 
+router.get('/comments', async (req, res) => await readItems(req, res, Issue));
+router.get('/comments/:id', async (req, res) => await readItem(req, res, Issue));
 router.put('/comments/:id', async (req, res) => await updateItem(req, res, Issue));
-router.delete('/comments/:id', async (req, res) => await deleteItem(req, res, Issue)); 
+router.delete('/comments/:id', async (req, res) => await deleteItem(req, res, Issue));
 
 
 //TAGS
 
 
-router.post('/tags', async (req, res) => await createItem(req, res, Tag)); 
+router.post('/tags', async (req, res) => await createItem(req, res, Tag));
 router.get('/tags', async (req, res) => await readItems(req, res, Tag));
-router.get('/tags/:id', async (req, res) => await readItem(req, res, Tag)); 
-router.put('/tags/:id', async (req, res) => await updateItem(req, res, Tag)); 
-router.delete('/tags/:id', async (req, res) => await deleteItem(req, res, Tag)); 
+router.get('/tags/:id', async (req, res) => await readItem(req, res, Tag));
+router.put('/tags/:id', async (req, res) => await updateItem(req, res, Tag));
+router.delete('/tags/:id', async (req, res) => await deleteItem(req, res, Tag));
 
 
 // Endpoint per vincular una etiqueta a un bolet

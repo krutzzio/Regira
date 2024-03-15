@@ -9,10 +9,10 @@ export type AuthContextType = {
 export type Id = string | number;
 
 export type Project = {
-    id: Id ;
+    id: Id;
     name: string | undefined;
     desc: string | undefined;
-    active: boolean ;
+    active: boolean;
     userid?: number | undefined;
 };
 
@@ -23,7 +23,7 @@ export type Issue = {
     type: "bug" | "feature" | "task";
     priority: "low" | "medium" | "high";
     state: "open" | "in_progress" | "resolved" | "closed";
-    projectId:  Id;
+    projectId: Id;
     authorId: number;
     assigneeId: number;
 }
@@ -67,4 +67,9 @@ export type ProjectContainer = {
 
 export type StateContaierType = {
     title: string;
+}
+
+export type IssueContainerType = {
+    issue: Issue;
+    index: number;
 }

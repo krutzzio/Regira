@@ -18,6 +18,5 @@ export default function Project() {
         }
       </div>
     </DragDropContext>
-
   )
 }
