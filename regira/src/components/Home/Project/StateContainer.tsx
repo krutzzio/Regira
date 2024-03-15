@@ -14,7 +14,7 @@ export default function StateContainer(props: StateContaierType) {
         <div {...provided.droppableProps} ref={provided.innerRef} className='p-4 bg-white max-h-[50rem] h-full rounded-lg border-[#aca498] border-2'>
           <h1 className='text-2xl text-center font-semibold'>{title}</h1>
           <section className='mt-4'>
-            <IssueContainer issue={issues}/>
+            {/* <IssueContainer issue={issues}/> */}
           </section>
           {provided.placeholder}
         </div>

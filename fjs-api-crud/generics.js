@@ -31,6 +31,15 @@ const readItemsUser = async (req, res, Model) => {
     }
 }
 
+const readItemsProject = async (req, res, Model) => {
+    try {
+        const item = await Model.findAll({ where: { ProjectId: req.params.projectId } })
+        res.json(item)
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
 const readItem = async (req, res, Model) => {
     try {
         const item = await Model.findByPk(req.params.id);
@@ -77,5 +86,6 @@ module.exports = {
     deleteItem,
     readItem,
     readItems,
-    readItemsUser
+    readItemsUser,
+    readItemsProject
 }  

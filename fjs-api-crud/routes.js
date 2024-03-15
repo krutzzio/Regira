@@ -14,7 +14,8 @@ const {
     deleteItem,
     readItem,
     readItems,
-    readItemsUser
+    readItemsUser,
+    readItemsProject
 } = require('./generics'); // Importa les funcions per a realitzar operacions CRUD genèriques
 
 // Configuració de multer per gestionar la pujada de fitxers
@@ -145,6 +146,8 @@ router.get('/issues', async (req, res) => await readItems(req, res, Issue));
 router.get('/issues/:id', async (req, res) => await readItem(req, res, Issue));
 router.put('/issues/:id', async (req, res) => await updateItem(req, res, Issue));
 router.delete('/issues/:id', async (req, res) => await deleteItem(req, res, Issue));
+router.get('/issues/project/:projectId', checkToken, async (req, res) => await readItemsProject(req, res, Issue));
+
 
 router.post('/issues/project/:projectId', checkToken, async (req, res, next) => {
     try {
