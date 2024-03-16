@@ -1,4 +1,3 @@
-import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import { IssueContainerType } from '../../../types'
 
@@ -6,7 +5,7 @@ export default function IssueContainer(props: IssueContainerType) {
 
     const { issue, index } = props
 
-    const {id, title, desc, type, priority, state, authorId, assigneeId} = issue
+    const { id, title, desc, type, priority, state, authorId, assigneeId } = issue
 
     return (
         <Draggable draggableId={`${id}`} index={index}>

@@ -67,6 +67,7 @@ export type ProjectContainer = {
 
 export type StateContaierType = {
     title: string;
+    issues: Issue[]
 }
 
 export type IssueContainerType = {
