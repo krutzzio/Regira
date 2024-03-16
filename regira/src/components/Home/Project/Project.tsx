@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { DragDropContext, DropResult } from "react-beautiful-dnd"
 import StateContainer from './StateContainer'
-import { StateContaierType } from '../../../types'
+import { State, StateContaierType } from '../../../types'
 import { useParams } from 'react-router-dom'
 
 export default function Project() {
   const { id } = useParams()
-  const STATES = ["open", "in_progress", "resolved", "closed"]
   const API_ISSUES_URL = `http://localhost:3000/api/issues/project/${id}`
 
+  const STATES = ["open", "in_progress", "resolved", "closed"]
 
   const [stateColumns, setStateColumns] = useState<StateContaierType[]>([])
 
@@ -24,15 +24,34 @@ export default function Project() {
         })
         setStateColumns(filteredIssues)
       })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {
-    console.log(stateColumns) 
-  }, [stateColumns])
-
   const handleDragEnd = (results: DropResult) => {
-    const {source, destination, type} = results
+
+    const { source, destination, draggableId } = results
+    if (!destination) return
+    if (source.droppableId === destination?.droppableId) return
+    const sourceCol = [...stateColumns].find(state => state.title === source.droppableId)
+    const destCol = [...stateColumns].find(state => state.title === destination.droppableId)
+
+    if (!sourceCol || !destCol) return
+    const itemDragged = sourceCol.issues.find(issue => issue.id == draggableId)
+    if (!itemDragged) return
+    const newSourceCol = { ...sourceCol, issues: sourceCol?.issues.filter((issue) => issue.id != draggableId) }
+    destCol.issues.push({ ...itemDragged, state: destination.droppableId as State }) //{ ...destCol, issues: [...destCol.issues, { ...itemDragged, state: destination.droppableId }] }
+
+    const newst = [...stateColumns].map(val => {
+      if (val.title === source.droppableId) {
+        return newSourceCol
+      } else if (val.title === destination.droppableId) {
+        return destCol
+      } else {
+        return val
+      }
+    })
+
+    setStateColumns(newst)
   }
 
   return (

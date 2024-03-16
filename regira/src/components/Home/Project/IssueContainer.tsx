@@ -13,6 +13,7 @@ export default function IssueContainer(props: IssueContainerType) {
                 <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className='bg-[#e4e2dd] w-full min-h-24 rounded-lg p-2 border'>
                     <h1>{title}</h1>
                     <p>{desc}</p>
+                    <p>{state}</p>
                 </div>
             )}
         </Draggable>

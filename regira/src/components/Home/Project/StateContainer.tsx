@@ -6,16 +6,17 @@ export default function StateContainer(props: StateContaierType) {
   const { title, issues } = props
 
   return (
-    <div className='p-4 bg-white max-h-[50rem] h-full rounded-lg border-[#aca498] border-2'>
-      <h1 className='text-2xl text-center font-semibold'>{title}</h1>
-      <Droppable droppableId={title}>
-        {(provided) => (
-          <section {...provided.droppableProps} ref={provided.innerRef} className='mt-4 h-full'>
+
+    <Droppable droppableId={title}>
+      {(provided) => (
+        <div className='p-4 flex flex-col bg-white h-full rounded-lg border-[#aca498] border-2'>
+          <h1 className='text-2xl text-center font-semibold'>{title}</h1>
+          <section {...provided.droppableProps} ref={provided.innerRef} className='h-full'>
             {issues.map((issue, index) => <IssueContainer key={issue.id} issue={issue} index={index} />)}
             {provided.placeholder}
           </section>
-        )}
-      </Droppable>
-    </div>
+        </div>
+      )}
+    </Droppable>
   )
 }

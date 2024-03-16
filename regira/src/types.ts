@@ -22,11 +22,13 @@ export type Issue = {
     desc: string;
     type: "bug" | "feature" | "task";
     priority: "low" | "medium" | "high";
-    state: "open" | "in_progress" | "resolved" | "closed";
+    state: State;
     projectId: Id;
     authorId: number;
     assigneeId: number;
 }
+
+export type State = "open" | "in_progress" | "resolved" | "closed";
 
 export type LogIn = {
     email: string;
