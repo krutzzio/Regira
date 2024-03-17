@@ -124,7 +124,7 @@ router.put('/projects/:id', checkToken, async (req, res) => await updateItem(req
 router.delete('/projects/:id', checkToken, async (req, res) => await deleteItem(req, res, Project));
 
 // Endpoint per crear un project (amb foto) (afegit checkToken)
-router.post('/projects', checkToken, async (req, res, next) => {
+router.post('/projects', checkToken, async (req, res) => {
     try {
         const user = await User.findByPk(req.userId); // Cerca l'usuari pel seu ID
         if (!user) {
@@ -149,7 +149,7 @@ router.delete('/issues/:id', async (req, res) => await deleteItem(req, res, Issu
 router.get('/issues/project/:projectId', checkToken, async (req, res) => await readItemsProject(req, res, Issue));
 
 
-router.post('/issues/project/:projectId', checkToken, async (req, res, next) => {
+router.post('/issues/project/:projectId', checkToken, async (req, res) => {
     try {
         const project = await Project.findByPk(req.params.projectId); // Cerca l'usuari pel seu ID
         const user = await User.findByPk(req.userId)

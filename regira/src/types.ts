@@ -69,7 +69,8 @@ export type ProjectContainer = {
 
 export type StateContaierType = {
     title: string;
-    issues: Issue[]
+    issues: Issue[];
+    newIssue: () => void;
 }
 
 export type IssueContainerType = {

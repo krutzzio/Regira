@@ -3,6 +3,7 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd"
 import StateContainer from './StateContainer'
 import { State, StateContaierType } from '../../../types'
 import { useParams } from 'react-router-dom'
+import Modal from '../../Modal/Modal'
 
 export default function Project() {
   const { id } = useParams()
@@ -11,6 +12,7 @@ export default function Project() {
   const STATES = ["open", "in_progress", "resolved", "closed"]
 
   const [stateColumns, setStateColumns] = useState<StateContaierType[]>([])
+  const [newIssue, setNewIssue] = useState<boolean>(false)
 
   useEffect(() => {
     fetch(API_ISSUES_URL, { credentials: "include" })
@@ -28,7 +30,6 @@ export default function Project() {
   }, [])
 
   const handleDragEnd = (results: DropResult) => {
-
     const { source, destination, draggableId } = results
     if (!destination) return
     if (source.droppableId === destination?.droppableId) return
@@ -41,7 +42,7 @@ export default function Project() {
     const newSourceCol = { ...sourceCol, issues: sourceCol?.issues.filter((issue) => issue.id != draggableId) }
     destCol.issues.push({ ...itemDragged, state: destination.droppableId as State }) //{ ...destCol, issues: [...destCol.issues, { ...itemDragged, state: destination.droppableId }] }
 
-    const newst = [...stateColumns].map(val => {
+    const newStateColumns = [...stateColumns].map(val => {
       if (val.title === source.droppableId) {
         return newSourceCol
       } else if (val.title === destination.droppableId) {
@@ -51,14 +52,19 @@ export default function Project() {
       }
     })
 
-    setStateColumns(newst)
+    setStateColumns(newStateColumns)
   }
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
+      {
+        newIssue &&
+        <Modal type={"issue"} closeModal={() => setNewIssue(false)} />
+
+      }
       <div className='p-8 grid grid-cols-4 gap-4 h-screen'>
         {
-          stateColumns.map(state => <StateContainer key={state.title} title={state.title} issues={state.issues} />)
+          stateColumns.map(state => <StateContainer key={state.title} newIssue={() => setNewIssue(true)} title={state.title} issues={state.issues} />)
         }
       </div>
     </DragDropContext>
