@@ -16,19 +16,21 @@ export type Project = {
     userid?: number | undefined;
 };
 
+export type State = "open" | "in_progress" | "resolved" | "closed";
+export type Type = "bug" | "feature" | "task";
+export type Priority = "low" | "medium" | "high";
+
 export type Issue = {
     id: Id;
     title: string;
     desc: string;
-    type: "bug" | "feature" | "task";
-    priority: "low" | "medium" | "high";
+    type: Type;
+    priority: Priority;
     state: State;
-    projectId: Id;
-    authorId: number;
-    assigneeId: number;
+    projectId?: Id;
+    authorId?: number;
+    assigneeId?: number;
 }
-
-export type State = "open" | "in_progress" | "resolved" | "closed";
 
 export type LogIn = {
     email: string;
@@ -49,8 +51,11 @@ export type RegisterIn = {
 export type ModalType = {
     type: "project" | "issue";
     addProject?: (add: Project) => void;
-    addIssue?: (add: Issue) => void;
     closeModal: () => void;
+    addIssue?: {
+        issueFn: (add: Issue) => void;
+        issueState: State | undefined;
+    }
 }
 
 export type HeaderType = {
@@ -63,6 +68,12 @@ export type AddProjectType = {
     closeModal: () => void;
 }
 
+export type AddIssueType = {
+    issueState: State | undefined;
+    addIssue?: (add: Issue) => void;
+    closeModal: () => void;
+}
+
 export type ProjectContainer = {
     project: Project
 }
@@ -70,7 +81,7 @@ export type ProjectContainer = {
 export type StateContaierType = {
     title: string;
     issues: Issue[];
-    newIssue: () => void;
+    createIssue?: (state: State) => void;
 }
 
 export type IssueContainerType = {

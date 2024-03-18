@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { DragDropContext, DropResult } from "react-beautiful-dnd"
 import StateContainer from './StateContainer'
-import { State, StateContaierType } from '../../../types'
+import { Issue, State, StateContaierType } from '../../../types'
 import { useParams } from 'react-router-dom'
 import Modal from '../../Modal/Modal'
 
@@ -10,24 +10,26 @@ export default function Project() {
   const API_ISSUES_URL = `http://localhost:3000/api/issues/project/${id}`
 
   const STATES = ["open", "in_progress", "resolved", "closed"]
-
+  const [issues, setIssues] = useState<Issue[]>([])
   const [stateColumns, setStateColumns] = useState<StateContaierType[]>([])
-  const [newIssue, setNewIssue] = useState<boolean>(false)
+  const [createIssue, setCreateIssue] = useState<State | undefined>()
 
   useEffect(() => {
     fetch(API_ISSUES_URL, { credentials: "include" })
       .then(resp => resp.json())
-      .then(data => {
-        const filteredIssues = STATES.map(state => {
-          return {
-            title: state,
-            issues: data.filter((issue: { state: string }) => issue.state === state)
-          }
-        })
-        setStateColumns(filteredIssues)
-      })
+      .then(data => setIssues(data))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    const filteredIssues = STATES.map(state => {
+      return {
+        title: state,
+        issues: issues.filter((issue: { state: string }) => issue.state === state)
+      }
+    })
+    setStateColumns(filteredIssues)
+  }, [issues])
 
   const handleDragEnd = (results: DropResult) => {
     const { source, destination, draggableId } = results
@@ -40,7 +42,7 @@ export default function Project() {
     const itemDragged = sourceCol.issues.find(issue => issue.id == draggableId)
     if (!itemDragged) return
     const newSourceCol = { ...sourceCol, issues: sourceCol?.issues.filter((issue) => issue.id != draggableId) }
-    destCol.issues.push({ ...itemDragged, state: destination.droppableId as State }) //{ ...destCol, issues: [...destCol.issues, { ...itemDragged, state: destination.droppableId }] }
+    destCol.issues.push({ ...itemDragged, state: destination.droppableId as State })
 
     const newStateColumns = [...stateColumns].map(val => {
       if (val.title === source.droppableId) {
@@ -51,20 +53,42 @@ export default function Project() {
         return val
       }
     })
+    const API_ISSUE_URL_PUT = `http://localhost:3000/api/issues/${itemDragged.id}`
+    fetch(API_ISSUE_URL_PUT, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ state: destination.droppableId })
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        if (data.error) throw new Error(data.error)
+        setStateColumns(newStateColumns)
+      })
+      .catch(err => console.log(err))
+  }
 
-    setStateColumns(newStateColumns)
+  const newIssueState = (issueState: State | undefined) => {
+    setCreateIssue(issueState)
+  }
+
+  const addedIssue = {
+    issueFn: (newIssue: Issue) => {
+      setIssues([...issues, newIssue])
+    },
+    issueState: createIssue,
   }
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       {
-        newIssue &&
-        <Modal type={"issue"} closeModal={() => setNewIssue(false)} />
-
+        createIssue &&
+        <Modal type={"issue"} addIssue={addedIssue} closeModal={() => setCreateIssue(undefined)} />
       }
+
       <div className='p-8 grid grid-cols-4 gap-4 h-screen'>
         {
-          stateColumns.map(state => <StateContainer key={state.title} newIssue={() => setNewIssue(true)} title={state.title} issues={state.issues} />)
+          stateColumns.map(state => <StateContainer key={state.title} createIssue={newIssueState} title={state.title} issues={state.issues} />)
         }
       </div>
     </DragDropContext>
