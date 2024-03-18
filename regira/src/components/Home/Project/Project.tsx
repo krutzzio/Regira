@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { DragDropContext, DropResult } from "react-beautiful-dnd"
 import StateContainer from './StateContainer'
-import { Issue, State, StateContaierType } from '../../../types'
+import { Issue, Project, State, StateContaierType } from '../../../types'
 import { useParams } from 'react-router-dom'
 import Modal from '../../Modal/Modal'
 
@@ -9,15 +9,23 @@ export default function Project() {
   const { id } = useParams()
   const API_ISSUES_URL = `http://localhost:3000/api/issues/project/${id}`
 
+
   const STATES = ["open", "in_progress", "resolved", "closed"]
-  const [issues, setIssues] = useState<Issue[]>([])
-  const [stateColumns, setStateColumns] = useState<StateContaierType[]>([])
-  const [createIssue, setCreateIssue] = useState<State | undefined>()
+  const [project, setProject] = useState<Project>() //project info
+  const [issues, setIssues] = useState<Issue[]>([]) //issues array of project
+  const [stateColumns, setStateColumns] = useState<StateContaierType[]>([]) //columns for each state of the issues
+  const [createIssue, setCreateIssue] = useState<State | undefined>() //create Issue
+  const [issueView, setIssueView] = useState<Issue | undefined>() //see issue info
 
   useEffect(() => {
     fetch(API_ISSUES_URL, { credentials: "include" })
       .then(resp => resp.json())
-      .then(data => setIssues(data))
+      .then(data => {
+        setIssues(data.item)
+        setProject(data.project)
+      })
+      .catch(err => console.log(err))
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -72,6 +80,10 @@ export default function Project() {
     setCreateIssue(issueState)
   }
 
+  const issueViewInfo = (issue: Issue) => {
+    setIssueView(issue)
+  }
+
   const addedIssue = {
     issueFn: (newIssue: Issue) => {
       setIssues([...issues, newIssue])
@@ -85,10 +97,15 @@ export default function Project() {
         createIssue &&
         <Modal type={"issue"} addIssue={addedIssue} closeModal={() => setCreateIssue(undefined)} />
       }
-
-      <div className='p-8 grid grid-cols-4 gap-4 h-screen'>
+      {
+        issueView &&
+        <Modal type="issueView" closeModal={() => setIssueView(undefined)} issue={issueView} />
+      }
+      <h1 className='pl-8 text-4xl'>{project?.name}</h1>
+      <p className='pl-8 text-xl'>{project?.desc}</p>
+      <div className='p-8 grid grid-cols-4 gap-4 h-screen overflow-auto'>
         {
-          stateColumns.map(state => <StateContainer key={state.title} createIssue={newIssueState} title={state.title} issues={state.issues} />)
+          stateColumns.map(state => <StateContainer key={state.title} createIssue={newIssueState} title={state.title} issues={state.issues} issueInfo={issueViewInfo} />)
         }
       </div>
     </DragDropContext>

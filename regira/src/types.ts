@@ -49,13 +49,14 @@ export type RegisterIn = {
 }
 
 export type ModalType = {
-    type: "project" | "issue";
+    type: "project" | "issue" | "issueView";
     addProject?: (add: Project) => void;
     closeModal: () => void;
     addIssue?: {
         issueFn: (add: Issue) => void;
         issueState: State | undefined;
     }
+    issue?: Issue;
 }
 
 export type HeaderType = {
@@ -82,9 +83,16 @@ export type StateContaierType = {
     title: string;
     issues: Issue[];
     createIssue?: (state: State) => void;
+    issueInfo?: (issue: Issue) => void;
 }
 
 export type IssueContainerType = {
     issue: Issue;
     index: number;
+    issueInfo?: (issue: Issue) => void;
+}
+
+export type IssueViewType = {
+    issue: Issue;
+
 }

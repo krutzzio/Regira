@@ -21,18 +21,21 @@ export default function ProjectsBoard() {
     }
 
     return (
-        <div className="h-full p-8 grid grid-cols-5">
-            {
-                createProject &&
-                <Modal type={"project"} addProject={addColumn} closeModal={() => setCreateProject(false)} />
-
-            }
-            <div className="w-full flex flex-col gap-4 col-span-3">
+        <main className="p-8">
+            <h1 className="text-4xl font-light mb-4">Projects</h1>
+            <div className="h-full  grid grid-cols-5">
                 {
-                    columns?.map(col => <ColumnContainer key={col.id} project={col} />)
+                    createProject &&
+                    <Modal type={"project"} addProject={addColumn} closeModal={() => setCreateProject(false)} />
+
                 }
-                <button onClick={() => setCreateProject(true)}>Add Project</button>
+                <div className="w-full flex flex-col gap-4 col-span-3">
+                    {
+                        columns?.map(col => <ColumnContainer key={col.id} project={col} />)
+                    }
+                    <button onClick={() => setCreateProject(true)}>Add Project</button>
+                </div>
             </div>
-        </div>
+        </main>
     )
 }

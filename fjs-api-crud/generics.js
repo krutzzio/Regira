@@ -2,6 +2,7 @@
 // Similar CRUD operations for Issue, User, Tag, and Comment...
 
 const { where } = require("sequelize");
+const { Project } = require("./models")
 
 
 const createItem = async (req, res, Model) => {
@@ -33,8 +34,9 @@ const readItemsUser = async (req, res, Model) => {
 
 const readItemsProject = async (req, res, Model) => {
     try {
+        const project = await Project.findByPk(req.params.projectId)
         const item = await Model.findAll({ where: { ProjectId: req.params.projectId } })
-        res.json(item)
+        res.json({item, project})
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

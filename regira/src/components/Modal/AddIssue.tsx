@@ -22,9 +22,8 @@ export function AddIssue(props: AddIssueType) {
             .then(resp => resp.json())
             .then(data => {
                 if (data.error) throw new Error(data.error)
-                console.log("CORRECT ISSUE", data)
                 const createdIssue = {
-                    title: data.name,
+                    title: data.title,
                     desc: data.desc,
                     type: data.type,
                     priority: data.priority,
@@ -63,7 +62,7 @@ export function AddIssue(props: AddIssueType) {
             <button className='absolute top-0 right-0' onClick={closeModal}>X</button>
             <form action='POST' onSubmit={createProject}>
                 <label className="block" htmlFor="title">Name</label>
-                <input className="w-full mt-1 mb-2 px-2 py-1 rounded" type="text" name='title' onChange={handleChange} />
+                <input autoFocus className="w-full mt-1 mb-2 px-2 py-1 rounded" type="text" name='title' onChange={handleChange} />
                 <label className="block" htmlFor="desc">Description</label>
                 <textarea className="w-full mt-1 mb-2 px-2 py-1 rounded" rows={5} name='desc' onChange={handleChange} />
                 <main className="w-full flex justify-between">
