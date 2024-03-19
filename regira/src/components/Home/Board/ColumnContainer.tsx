@@ -17,17 +17,20 @@ export default function ColumnContainer(props: ProjectContainer) {
 
 
   return (
-    <Link
-      to={`project/${project.id}`}
-      className="relative w-full h-44 bg-white p-4 rounded-md">
-      <section>
-        <h1>{editing ? <input type="text" autoFocus onChange={(e) => { setColumnName(e.target.value) }} onBlur={() => setEditing(false)} /> : columnName}</h1>
-        <p>{project.desc}</p>
-      </section>
-      <section className="absolute top-4 right-4 text-2xl flex justify-end gap-4 w-16">
-        <CiEdit onClick={() => setEditing(true)} />
-        <CiTrash color="red" onClick={() => setDeleteProject(true)} />
-      </section>
-    </Link>
+    <div className="w-full h-44 bg-white  rounded-md">
+      <Link
+        to={`project/${project.id}`}
+        className="block relative w-full h-full p-4">
+        <section>
+          <h1>{editing ? <input type="text" autoFocus onChange={(e) => { setColumnName(e.target.value) }} onBlur={() => setEditing(false)} /> : columnName}</h1>
+          <p>{project.desc}</p>
+        </section>
+        <section className="absolute top-4 right-4 text-2xl flex justify-end gap-4 w-16">
+          <CiEdit onClick={() => setEditing(true)} />
+          <CiTrash color="red" onClick={() => setDeleteProject(true)} />
+        </section>
+      </Link>
+    </div>
+
   )
 }

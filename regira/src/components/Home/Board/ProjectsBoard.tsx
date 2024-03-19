@@ -21,9 +21,9 @@ export default function ProjectsBoard() {
     }
 
     return (
-        <main className="p-8">
+        <main className="p-8 ">
             <h1 className="text-4xl font-light mb-4">Projects</h1>
-            <div className="h-full  grid grid-cols-5">
+            <div className="h-full grid grid-cols-5">
                 {
                     createProject &&
                     <Modal type={"project"} addProject={addColumn} closeModal={() => setCreateProject(false)} />

@@ -101,12 +101,14 @@ export default function Project() {
         issueView &&
         <Modal type="issueView" closeModal={() => setIssueView(undefined)} issue={issueView} />
       }
-      <h1 className='pl-8 text-4xl'>{project?.name}</h1>
-      <p className='pl-8 text-xl'>{project?.desc}</p>
-      <div className='p-8 grid grid-cols-4 gap-4 h-screen overflow-auto'>
-        {
-          stateColumns.map(state => <StateContainer key={state.title} createIssue={newIssueState} title={state.title} issues={state.issues} issueInfo={issueViewInfo} />)
-        }
+      <div className='h-full p-8 flex flex-col gap-2 justify-start'>
+        <h1 className=' text-4xl'>{project?.name}</h1>
+        <p className='text-xl'>{project?.desc}</p>
+        <div className='grid grid-cols-4 gap-4'>
+          {
+            stateColumns.map(state => <StateContainer key={state.title} createIssue={newIssueState} title={state.title} issues={state.issues} issueInfo={issueViewInfo} />)
+          }
+        </div>
       </div>
     </DragDropContext>
   )
