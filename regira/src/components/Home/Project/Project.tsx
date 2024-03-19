@@ -101,7 +101,7 @@ export default function Project() {
         issueView &&
         <Modal type="issueView" closeModal={() => setIssueView(undefined)} issue={issueView} />
       }
-      <div className='h-full p-8 flex flex-col gap-2 justify-start'>
+      <div className='h-full p-8 pt-0 flex flex-col gap-2 justify-start'>
         <h1 className=' text-4xl'>{project?.name}</h1>
         <p className='text-xl'>{project?.desc}</p>
         <div className='grid grid-cols-4 gap-4'>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AddIssueType, Issue, Priority, State, Type } from "../../types";
 import { useParams } from "react-router-dom";
+import { IoIosClose } from "react-icons/io";
 
 
 export function AddIssue(props: AddIssueType) {
@@ -57,9 +58,9 @@ export function AddIssue(props: AddIssueType) {
     }
 
     return (
-        <div className='relative'>
+        <div className='relative p-4 h-4/6 bg-[#d9d5cf] rounded-lg'>
             <h1 className='text-4xl font-light text-center mb-8'>New Issue</h1>
-            <button className='absolute top-0 right-0' onClick={closeModal}>X</button>
+            <button className='absolute top-0 right-0 text-4xl' onClick={closeModal}><IoIosClose /></button>
             <form action='POST' onSubmit={createProject}>
                 <label className="block" htmlFor="title">Name</label>
                 <input autoFocus className="w-full mt-1 mb-2 px-2 py-1 rounded" type="text" name='title' onChange={handleChange} />

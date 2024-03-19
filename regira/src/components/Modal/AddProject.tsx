@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AddProjectType, Project } from "../../types";
+import { IoIosClose } from "react-icons/io";
 
 
 export function AddProject(props: AddProjectType) {
@@ -45,25 +46,16 @@ export function AddProject(props: AddProjectType) {
         console.log(newProject, event)
     }
 
-    const handleChangeBoolean = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const inputType = event.target
-        setNewProject({ ...newProject, active: inputType.checked })
-    }
-
     return (
-        <div>
-            <div className='relative'>
+        <div className='z-10 overflow-auto flex justify-center items-center relative p-4 h-4/6 w-6/6 bg-[#d9d5cf] rounded-lg'>
+            <div className="flex flex-col ">
                 <h1 className='text-4xl text-center mb-8'>New Project</h1>
-                <button className='absolute top-0 right-0' onClick={closeModal}>X</button>
+                <button className='absolute top-2 right-2 text-4xl' onClick={closeModal}><IoIosClose /></button>
                 <form action='POST' onSubmit={createProject}>
                     <label className="block" htmlFor="name">Name</label>
                     <input className="w-full mt-1 mb-2 px-2 py-1 rounded" type="text" name='name' onChange={handleChange} />
                     <label className="block" htmlFor="desc">Description</label>
                     <textarea className="w-full mt-1 mb-2 px-2 py-1 rounded" rows={5} name='desc' onChange={handleChange} />
-                    <article className="w-fit flex flex-col items-center">
-                        <label className="block" htmlFor="active">Active</label>
-                        <input className='px-2 py-1 inline-block' type="checkbox" id="active" name='active' defaultChecked onChange={handleChangeBoolean} />
-                    </article>
                     <button className="w-full text-center">Create Project</button>
                 </form>
             </div>
