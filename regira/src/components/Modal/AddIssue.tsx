@@ -58,7 +58,7 @@ export function AddIssue(props: AddIssueType) {
     }
 
     return (
-        <div className='relative p-4 h-4/6 bg-[#d9d5cf] rounded-lg'>
+        <div className='z-20 relative p-4 h-fit w-3/12 bg-[#d9d5cf] rounded-lg'>
             <h1 className='text-4xl font-light text-center mb-8'>New Issue</h1>
             <button className='absolute top-0 right-0 text-4xl' onClick={closeModal}><IoIosClose /></button>
             <form action='POST' onSubmit={createProject}>
