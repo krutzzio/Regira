@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { AddIssueType, Issue, Priority, State, Type } from "../../types";
+import { useEffect, useState } from "react";
+import { AddIssueType, Issue, Priority, State, Tags, Type } from "../../types";
 import { useParams } from "react-router-dom";
 import { IoIosClose } from "react-icons/io";
 
@@ -8,6 +8,18 @@ export function AddIssue(props: AddIssueType) {
     const { issueState, addIssue, closeModal } = props;
     const { id } = useParams()
     const [newIssue, setNewIssue] = useState<Issue>({ title: "", desc: "", type: "bug", priority: "high", state: issueState as State, id: 0 })
+    const [tags, setTags] = useState<Tags[]>([])
+    const [selectedTags, setSelectedTags] = useState<Tags[]>([])
+
+    useEffect(() => {
+        const API_TAGS_URL = `http://localhost:3000/api/tags`
+
+        fetch(API_TAGS_URL, { credentials: 'include', })
+            .then(resp => resp.json())
+            .then(data => setTags(data))
+            .catch(err => console.log(err))
+
+    }, [])
 
     const createProject = (event: React.FormEvent) => {
         event.preventDefault()
@@ -42,7 +54,7 @@ export function AddIssue(props: AddIssueType) {
         closeModal()
     }
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const inputType = event.target
         if (inputType.name === "title") {
             setNewIssue({ ...newIssue, title: inputType.value })
@@ -58,67 +70,52 @@ export function AddIssue(props: AddIssueType) {
     }
 
     return (
-        <div className='relative p-4 h-4/6 bg-[#d9d5cf] rounded-lg'>
-            <h1 className='text-4xl font-light text-center mb-8'>New Issue</h1>
+        <div className='relative p-4 bg-[#d9d5cf] rounded-lg'>
+            <h1 className='text-4xl font-medium  text-center mb-8'>New Issue</h1>
             <button className='absolute top-0 right-0 text-4xl' onClick={closeModal}><IoIosClose /></button>
-            <form action='POST' onSubmit={createProject}>
-                <label className="block" htmlFor="title">Name</label>
-                <input autoFocus className="w-full mt-1 mb-2 px-2 py-1 rounded" type="text" name='title' onChange={handleChange} />
-                <label className="block" htmlFor="desc">Description</label>
-                <textarea className="w-full mt-1 mb-2 px-2 py-1 rounded" rows={5} name='desc' onChange={handleChange} />
-                <main className="w-full flex justify-between">
+            <form action='POST' className="flex flex-col gap-3" onSubmit={createProject}>
+                <article>
+                    <label className="block" htmlFor="title">Name</label>
+                    <input autoFocus className="w-full px-2 py-1 rounded" type="text" name='title' id="title" onChange={handleChange} />
+                </article>
+                <article>
+                    <label className="block" htmlFor="desc">Description</label>
+                    <textarea className="w-full px-2 py-1 rounded" rows={5} name='desc' id="desc" onChange={handleChange} />
+                </article>
+                <main className="w-full flex gap-4 justify-between">
                     <section>
                         <h1>Type</h1>
-                        <article>
-                            <label htmlFor="bug">Bug</label>
-                            <input type="radio" name="type" id="bug" value="bug" onChange={handleChange} />
-                        </article>
-                        <article>
-                            <label htmlFor="feature">Feature</label>
-                            <input type="radio" name="type" id="feature" value="feature" onChange={handleChange} />
-                        </article>
-                        <article>
-                            <label htmlFor="task">Task</label>
-                            <input type="radio" name="type" id="task" value="task" onChange={handleChange} />
-                        </article>
+                        <select name="type" id="type" value={newIssue.type} onChange={handleChange}>
+                            <option value="bug">Bug</option>
+                            <option value="feature">Feature</option>
+                            <option value="task">Task</option>
+                        </select>
                     </section>
                     <section>
                         <h1>Priority</h1>
-                        <article>
-                            <label htmlFor="low">Low</label>
-                            <input type="radio" name="priority" id="low" value="low" onChange={handleChange} />
-                        </article>
-                        <article>
-                            <label htmlFor="medium">Medium</label>
-                            <input type="radio" name="priority" id="medium" value="medium" onChange={handleChange} />
-                        </article>
-                        <article>
-                            <label htmlFor="high">High</label>
-                            <input type="radio" name="priority" id="high" value="high" onChange={handleChange} />
-                        </article>
+                        <select name="priority" id="priority" value={newIssue.priority} onChange={handleChange}>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
                     </section>
                     <section>
                         <h1>State</h1>
-                        <article>
-                            <label htmlFor="open">Open</label>
-                            <input type="radio" name="state" id="open" value="open" defaultChecked={issueState === "open"} onChange={handleChange} />
-                        </article>
-                        <article>
-                            <label htmlFor="in_progress">In Progress</label>
-                            <input type="radio" name="state" id="in_progress" value="in_progress" defaultChecked={issueState === "in_progress"} onChange={handleChange} />
-                        </article>
-                        <article>
-                            <label htmlFor="resolved">Resolved</label>
-                            <input type="radio" name="state" id="resolved" value="resolved" defaultChecked={issueState === "resolved"} onChange={handleChange} />
-                        </article>
-                        <article>
-                            <label htmlFor="closed">Closed</label>
-                            <input type="radio" name="state" id="closed" value="closed" defaultChecked={issueState === "closed"} onChange={handleChange} />
-                        </article>
+                        <select name="state" id="state" value={newIssue.state} onChange={handleChange}>
+                            <option value="open">Open</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                            <option value="closed">Closed</option>
+                        </select>
                     </section>
                 </main>
-
-                <button className="w-full text-center">Create Issue</button>
+                <section>
+                    Tags
+                    <article>
+                        <select name="" id=""></select>
+                    </article>
+                </section>
+                <button className="w-full p-4 text-center">Create Issue</button>
             </form>
         </div>
     )

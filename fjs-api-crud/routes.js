@@ -178,7 +178,7 @@ router.delete('/comments/:id', async (req, res) => await deleteItem(req, res, Is
 
 
 router.post('/tags', async (req, res) => await createItem(req, res, Tag));
-router.get('/tags', async (req, res) => await readItems(req, res, Tag));
+router.get('/tags', checkToken, async (req, res) => await readItems(req, res, Tag));
 router.get('/tags/:id', async (req, res) => await readItem(req, res, Tag));
 router.put('/tags/:id', async (req, res) => await updateItem(req, res, Tag));
 router.delete('/tags/:id', async (req, res) => await deleteItem(req, res, Tag));

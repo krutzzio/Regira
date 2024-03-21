@@ -32,6 +32,11 @@ export type Issue = {
     assigneeId?: number;
 }
 
+export type Tags = {
+    id: Id;
+    name: string;
+}
+
 export type LogIn = {
     email: string;
     password: string;
@@ -94,5 +99,4 @@ export type IssueContainerType = {
 
 export type IssueViewType = {
     issue: Issue;
-
 }

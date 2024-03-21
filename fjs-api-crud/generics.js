@@ -36,7 +36,7 @@ const readItemsProject = async (req, res, Model) => {
     try {
         const project = await Project.findByPk(req.params.projectId)
         const item = await Model.findAll({ where: { ProjectId: req.params.projectId } })
-        res.json({item, project})
+        res.json({ item, project })
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
