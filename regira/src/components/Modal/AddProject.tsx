@@ -45,8 +45,8 @@ export function AddProject(props: AddProjectType) {
     }
 
     return (
-        <div className='z-10 overflow-auto flex justify-center items-center relative p-4 w-6/6 bg-[#d9d5cf] rounded-lg'>
-            <div className="flex flex-col ">
+        <div className='z-20 overflow-auto flex justify-center items-center relative p-4 h-3/6 w-3/12 bg-[#d9d5cf] rounded-lg'>
+            <div className="flex flex-col w-full">
                 <h1 className='text-4xl text-center mb-8'>New Project</h1>
                 <button className='absolute top-2 right-2 text-4xl' onClick={closeModal}><IoIosClose /></button>
                 <form action='POST' onSubmit={createProject}>

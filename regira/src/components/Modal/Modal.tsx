@@ -10,7 +10,7 @@ export default function Modal(props: ModalType) {
 
   return (
     <div className='w-screen h-screen absolute top-0 left-0 flex justify-center items-center'>
-      <div onClick={closeModal} className='bg-black transition-colors bg-opacity-80 w-full h-full absolute top-0 left-0'></div>
+      <div onClick={closeModal} className='bg-black transition-colors bg-opacity-80 w-full h-full absolute z-10  top-0 left-0'></div>
       {
         type === "project"
           ? <AddProject closeModal={closeModal} addProject={addProject} />

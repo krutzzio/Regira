@@ -1,4 +1,4 @@
-import { /*useContext,*/ useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Project } from "../../../types"
 import ColumnContainer from "./ColumnContainer"
 import Modal from "../../Modal/Modal"
@@ -21,7 +21,7 @@ export default function ProjectsBoard() {
     }
 
     return (
-        <main className="p-8 ">
+        <main className="p-8">
             <h1 className="text-4xl font-light mb-4">Projects</h1>
             <div className="h-full grid grid-cols-5">
                 {
