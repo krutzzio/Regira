@@ -20,7 +20,7 @@ export function AddIssue(props: AddIssueType) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify(newIssue)
+            body: JSON.stringify({ ...newIssue, tags: selectedTags })
         })
             .then(resp => resp.json())
             .then(data => {
@@ -109,7 +109,7 @@ export function AddIssue(props: AddIssueType) {
                         {
                             selectedTags.map(tag => <div key={tag.id}>{tag.name}</div>)
                         }
-                        <CreateTag addTag={addNewTag} />
+                        <CreateTag tags={selectedTags} addTag={addNewTag} />
                     </article>
                 </section>
                 <button className="w-fit m-auto bg-white rounded p-2 text-center">Create Issue</button>

@@ -17,7 +17,7 @@ const createItem = async (req, res, Model) => {
 const createTag = async (req, res, Model) => {
     try {
         const tagExist = await Model.findOne({ where: { name: req.body.name } })
-        if (tagExist) res.status(201).json(tagExist);
+        if (tagExist) return res.status(201).json(tagExist);
         const tag = await Model.create(req.body)
         res.status(201).json(tag);
     } catch (error) {

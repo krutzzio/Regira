@@ -16,7 +16,7 @@ export default function Modal(props: ModalType) {
           ? <AddProject closeModal={closeModal} addProject={addProject} />
           : type === "issue"
             ? <AddIssue closeModal={closeModal} issueState={addIssue?.issueState} addIssue={addIssue?.issueFn} />
-            : <IssueView issue={issue as Issue} />
+            : <IssueView issue={issue as Issue} closeModal={closeModal} />
       }
     </div>
   )

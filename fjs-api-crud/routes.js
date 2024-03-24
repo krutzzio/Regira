@@ -157,9 +157,11 @@ router.post('/issues/project/:projectId', checkToken, async (req, res) => {
         if (!project) {
             return res.status(500).json({ error: 'Projecte no trobat' }); // Retorna error 500 si no es troba l'usuari
         }
-        const { title, desc, type, priority, state } = req.body;
+        const { title, desc, type, priority, state, tags } = req.body;
+        console.log(tags)
         const issue = await project.createIssue({ title, desc, type, priority, state, authorId: user.id, assigneeId: user.id })
-        res.status(201).json(issue)
+        const issueWithTags = await issue.addTag(tags)
+        res.status(201).json(issue, issueWithTags)
     } catch (error) {
         res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
     }

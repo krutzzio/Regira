@@ -5,7 +5,7 @@ import { CreateNewTag } from '../../types';
 
 export default function CreateTag(props: CreateNewTag) {
 
-    const { addTag } = props
+    const { tags, addTag } = props
 
     const [creatingTag, setCreatingTag] = useState<boolean>(false)
 
@@ -17,7 +17,6 @@ export default function CreateTag(props: CreateNewTag) {
                         onKeyDown={e => {
                             if (e.key !== "Enter") return
                             const tagInput = e.target as HTMLTextAreaElement
-                            console.log(tagInput.value)
                             fetch("http://localhost:3000/api/tags", {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
@@ -25,7 +24,10 @@ export default function CreateTag(props: CreateNewTag) {
                                 body: JSON.stringify({ name: tagInput.value })
                             })
                                 .then(resp => resp.json())
-                                .then(data => addTag(data))
+                                .then(data => {
+                                    if (tags.find(tag => tag.name === data.name)) return
+                                    addTag(data)
+                                })
 
                             setCreatingTag(false)
                         }} />

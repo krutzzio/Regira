@@ -38,6 +38,7 @@ export type Tags = {
 }
 
 export type CreateNewTag = {
+    tags: Tags[];
     addTag: (tag: Tags) => void;
 }
 
@@ -103,4 +104,5 @@ export type IssueContainerType = {
 
 export type IssueViewType = {
     issue: Issue;
+    closeModal: () => void;
 }
