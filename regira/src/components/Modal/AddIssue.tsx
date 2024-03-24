@@ -1,25 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AddIssueType, Issue, Priority, State, Tags, Type } from "../../types";
 import { useParams } from "react-router-dom";
 import { IoIosClose } from "react-icons/io";
+import CreateTag from "../Tags/CreateTag";
 
 
 export function AddIssue(props: AddIssueType) {
     const { issueState, addIssue, closeModal } = props;
     const { id } = useParams()
     const [newIssue, setNewIssue] = useState<Issue>({ title: "", desc: "", type: "bug", priority: "high", state: issueState as State, id: 0 })
-    const [tags, setTags] = useState<Tags[]>([])
     const [selectedTags, setSelectedTags] = useState<Tags[]>([])
-
-    useEffect(() => {
-        const API_TAGS_URL = `http://localhost:3000/api/tags`
-
-        fetch(API_TAGS_URL, { credentials: 'include', })
-            .then(resp => resp.json())
-            .then(data => setTags(data))
-            .catch(err => console.log(err))
-
-    }, [])
 
     const createProject = (event: React.FormEvent) => {
         event.preventDefault()
@@ -69,9 +59,13 @@ export function AddIssue(props: AddIssueType) {
         }
     }
 
+    const addNewTag = (tag: Tags) => {
+        setSelectedTags([...selectedTags, tag])
+    }
+
     return (
         <div className='z-20 relative p-4 h-fit w-3/12 bg-[#d9d5cf] rounded-lg'>
-            <h1 className='text-4xl font-light text-center mb-8'>New Issue</h1>
+            <h1 className='text-4xl text-center mb-8'>New Issue</h1>
             <button className='absolute top-0 right-0 text-4xl' onClick={closeModal}><IoIosClose /></button>
             <form action='POST' className="flex flex-col gap-3" onSubmit={createProject}>
                 <article>
@@ -110,12 +104,15 @@ export function AddIssue(props: AddIssueType) {
                     </section>
                 </main>
                 <section>
-                    Tags
-                    <article>
-                        <select name="" id=""></select>
+                    <h1>Tags </h1>
+                    <article className="flex flex-wrap">
+                        {
+                            selectedTags.map(tag => <div key={tag.id}>{tag.name}</div>)
+                        }
+                        <CreateTag addTag={addNewTag} />
                     </article>
                 </section>
-                <button className="w-full p-4 text-center">Create Issue</button>
+                <button className="w-fit m-auto bg-white rounded p-2 text-center">Create Issue</button>
             </form>
         </div>
     )

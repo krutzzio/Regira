@@ -37,6 +37,10 @@ export type Tags = {
     name: string;
 }
 
+export type CreateNewTag = {
+    addTag: (tag: Tags) => void;
+}
+
 export type LogIn = {
     email: string;
     password: string;

@@ -14,6 +14,17 @@ const createItem = async (req, res, Model) => {
     }
 }
 
+const createTag = async (req, res, Model) => {
+    try {
+        const tagExist = await Model.findOne({ where: { name: req.body.name } })
+        if (tagExist) res.status(201).json(tagExist);
+        const tag = await Model.create(req.body)
+        res.status(201).json(tag);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
 const readItems = async (req, res, Model) => {
     try {
         const items = await Model.findAll();
@@ -89,5 +100,6 @@ module.exports = {
     readItem,
     readItems,
     readItemsUser,
+    createTag,
     readItemsProject
 }  

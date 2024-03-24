@@ -10,6 +10,7 @@ const { Project, Issue, Comment, Tag, User } = require('./models'); // Importa e
 
 const {
     createItem,
+    createTag,
     updateItem,
     deleteItem,
     readItem,
@@ -177,11 +178,13 @@ router.delete('/comments/:id', async (req, res) => await deleteItem(req, res, Is
 //TAGS
 
 
-router.post('/tags', async (req, res) => await createItem(req, res, Tag));
 router.get('/tags', checkToken, async (req, res) => await readItems(req, res, Tag));
 router.get('/tags/:id', async (req, res) => await readItem(req, res, Tag));
 router.put('/tags/:id', async (req, res) => await updateItem(req, res, Tag));
 router.delete('/tags/:id', async (req, res) => await deleteItem(req, res, Tag));
+
+router.post('/tags', checkToken, async (req, res) => await createTag(req, res, Tag));
+
 
 
 // Endpoint per vincular una etiqueta a un bolet
