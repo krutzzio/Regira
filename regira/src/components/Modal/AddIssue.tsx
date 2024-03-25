@@ -3,6 +3,7 @@ import { AddIssueType, Issue, Priority, State, Tags, Type } from "../../types";
 import { useParams } from "react-router-dom";
 import { IoIosClose } from "react-icons/io";
 import CreateTag from "../Tags/CreateTag";
+import Tag from "../Tags/Tag";
 
 
 export function AddIssue(props: AddIssueType) {
@@ -105,9 +106,9 @@ export function AddIssue(props: AddIssueType) {
                 </main>
                 <section>
                     <h1>Tags </h1>
-                    <article className="flex flex-wrap">
+                    <article className="flex flex-wrap gap-2">
                         {
-                            selectedTags.map(tag => <div key={tag.id}>{tag.name}</div>)
+                            selectedTags.map(tag => <Tag key={tag.id} id={tag.id} name={tag.name} />)
                         }
                         <CreateTag tags={selectedTags} addTag={addNewTag} />
                     </article>

@@ -33,7 +33,6 @@ export default function CreateTag(props: CreateNewTag) {
                         }} />
                     : <h1 className='flex items-center bg-white rounded w-fit p-1 cursor-pointer'>Add Tag <IoIosAdd size={20} /></h1>
             }
-
         </div>
     )
 }

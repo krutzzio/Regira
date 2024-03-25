@@ -94,6 +94,7 @@ const Tag = sequelize.define('Tag', {
     }
 });
 
+
 // Definim les relacions
 Project.hasMany(Issue); // Un projecte pot tenir diversos issues
 Issue.belongsTo(Project); // Un issue pertany a un únic projecte

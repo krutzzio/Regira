@@ -146,9 +146,19 @@ router.post('/projects', checkToken, async (req, res) => {
 router.get('/issues', async (req, res) => await readItems(req, res, Issue));
 router.get('/issues/:id', async (req, res) => await readItem(req, res, Issue));
 router.put('/issues/:id', async (req, res) => await updateItem(req, res, Issue));
-router.delete('/issues/:id', async (req, res) => await deleteItem(req, res, Issue));
+router.delete('/issues/:id', checkToken, async (req, res) => await deleteItem(req, res, Issue));
 router.get('/issues/project/:projectId', checkToken, async (req, res) => await readItemsProject(req, res, Issue));
 
+router.get('/issues/:id/tags', checkToken, async (req, res) => {
+    try {
+        const issue = await Issue.findByPk(req.params.id)
+        if (!issue) return res(404).json({ error: "Item not found" })
+        const tags = await issue.getTags()
+        res.json(tags)
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+})
 
 router.post('/issues/project/:projectId', checkToken, async (req, res) => {
     try {
@@ -158,10 +168,10 @@ router.post('/issues/project/:projectId', checkToken, async (req, res) => {
             return res.status(500).json({ error: 'Projecte no trobat' }); // Retorna error 500 si no es troba l'usuari
         }
         const { title, desc, type, priority, state, tags } = req.body;
-        console.log(tags)
+        const tagsId = tags.map(tag => tag.id)
         const issue = await project.createIssue({ title, desc, type, priority, state, authorId: user.id, assigneeId: user.id })
-        const issueWithTags = await issue.addTag(tags)
-        res.status(201).json(issue, issueWithTags)
+        await issue.addTags(tagsId)
+        res.status(201).json(issue)
     } catch (error) {
         res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
     }
@@ -184,7 +194,6 @@ router.get('/tags', checkToken, async (req, res) => await readItems(req, res, Ta
 router.get('/tags/:id', async (req, res) => await readItem(req, res, Tag));
 router.put('/tags/:id', async (req, res) => await updateItem(req, res, Tag));
 router.delete('/tags/:id', async (req, res) => await deleteItem(req, res, Tag));
-
 router.post('/tags', checkToken, async (req, res) => await createTag(req, res, Tag));
 
 
