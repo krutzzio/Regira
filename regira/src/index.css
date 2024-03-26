@@ -4,11 +4,14 @@
 
 @font-face {
     font-family: "Virgil";
-    src: url("../font/Virgil.woff2");
+    src: url("./font/Virgil.woff2");
 }
 
 :root {
     background-color: #E4E2dd;
     color: black;
+}
+
+body {
     font-family: "Virgil", 'Aileron', sans-serif;
 }

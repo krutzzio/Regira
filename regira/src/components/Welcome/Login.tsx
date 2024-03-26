@@ -38,7 +38,7 @@ export default function Login() {
             })
             .catch(err => console.log("ERROR EN EL LOGIN", err))
     }
-    
+
     return (
         <div className="w-full min-w-96 max-w-[35rem]">
             <h1 className="text-center text-6xl font-light ">Login</h1>
@@ -54,6 +54,7 @@ export default function Login() {
                 <button className="w-full hover:border-[#5d514b] hover:text-[#5d514b] text-[#887b6e] text-2xl border-[#887b6e] border-2 transition-colors py-2 rounded-sm">Log in</button>
                 <h1 className="text-center text-2xl">or <Link className="font-bold text-[#5d514b] underline" to={"/register"}>Create a new profile</Link></h1>
             </form>
+
         </div>
     )
 }
