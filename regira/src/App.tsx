@@ -1,6 +1,6 @@
 import './App.css'
 import { useState } from 'react'
-import Context from './Context'
+import Context from './context/AuthContext'
 import { Logged } from './types'
 import { BrowserRouter } from 'react-router-dom'
 import { Router } from './Router'

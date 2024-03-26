@@ -1,24 +1,13 @@
-import { useEffect, useState } from "react"
-import { Project } from "../../../types"
+import { useState } from "react"
 import ColumnContainer from "./ColumnContainer"
 import Modal from "../../Modal/Modal"
+import { useProjects } from "../../../hooks/useProjects"
 
 export default function ProjectsBoard() {
 
-    const [columns, setColumns] = useState<Project[]>([])
     const [createProject, setCreateProject] = useState<boolean>(false)
 
-    useEffect(() => {
-        const API_PROJECTES_URL = "http://localhost:3000/api/projects"
-        fetch(API_PROJECTES_URL, { credentials: 'include' })
-            .then(resp => resp.json())
-            .then(data => setColumns(data))
-            .catch(err => console.log(err))
-    }, [])
-
-    const addColumn = (newProject: Project) => {
-        setColumns([...columns, newProject]);
-    }
+    const { projects, addProject, deleteProject } = useProjects()
 
     return (
         <main className="p-8">
@@ -26,12 +15,11 @@ export default function ProjectsBoard() {
             <div className="h-full grid grid-cols-5">
                 {
                     createProject &&
-                    <Modal type={"project"} addProject={addColumn} closeModal={() => setCreateProject(false)} />
-
+                    <Modal type={"project"} addProject={addProject} closeModal={() => setCreateProject(false)} />
                 }
                 <div className="w-full flex flex-col gap-4 col-span-3">
                     {
-                        columns?.map(col => <ColumnContainer key={col.id} project={col} />)
+                        projects?.map(project => <ColumnContainer key={project.id} project={project} deleteProject={deleteProject} />)
                     }
                     <button onClick={() => setCreateProject(true)}>Add Project</button>
                 </div>

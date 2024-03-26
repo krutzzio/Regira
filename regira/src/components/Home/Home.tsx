@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
-import Context from '../../Context';
+import Context from '../../context/AuthContext';
 import Header from './Header';
 
 export default function Home() {

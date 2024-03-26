@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react"
 import { LogIn } from "../../types"
 import { Link, useNavigate } from "react-router-dom"
-import Context from "../../Context"
+import Context from "../../context/AuthContext"
 
 export default function Login() {
 
@@ -38,6 +38,7 @@ export default function Login() {
             })
             .catch(err => console.log("ERROR EN EL LOGIN", err))
     }
+    
     return (
         <div className="w-full min-w-96 max-w-[35rem]">
             <h1 className="text-center text-6xl font-light ">Login</h1>

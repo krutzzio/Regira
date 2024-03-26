@@ -1,43 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { DragDropContext, DropResult } from "react-beautiful-dnd"
 import StateContainer from './StateContainer'
-import { Issue, Project, State, StateContaierType } from '../../../types'
-import { useParams } from 'react-router-dom'
+import { Issue, Project, State } from '../../../types'
 import Modal from '../../Modal/Modal'
+import { useIssuesFromProjects } from '../../../hooks/useIssuesFromProject'
+import { useFilteredIssues } from '../../../hooks/useFilteredIssues'
 
 export default function Project() {
-  const { id } = useParams()
-  const API_ISSUES_URL = `http://localhost:3000/api/issues/project/${id}`
 
-
-  const STATES = ["open", "in_progress", "resolved", "closed"]
-  const [project, setProject] = useState<Project>() //project info
-  const [issues, setIssues] = useState<Issue[]>([]) //issues array of project
-  const [stateColumns, setStateColumns] = useState<StateContaierType[]>([]) //columns for each state of the issues
-  const [createIssue, setCreateIssue] = useState<State | undefined>() //create Issue
+  const { project, issues, newIssueState, createIssue, setCreateIssue, addIssue, deleteIssue } = useIssuesFromProjects()
+  const { stateColumns, setStateColumns } = useFilteredIssues(issues)
   const [issueView, setIssueView] = useState<Issue | undefined>() //see issue info
-
-  useEffect(() => {
-    fetch(API_ISSUES_URL, { credentials: "include" })
-      .then(resp => resp.json())
-      .then(data => {
-        setIssues(data.item)
-        setProject(data.project)
-      })
-      .catch(err => console.log(err))
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    const filteredIssues = STATES.map(state => {
-      return {
-        title: state,
-        issues: issues.filter((issue: { state: string }) => issue.state === state)
-      }
-    })
-    setStateColumns(filteredIssues)
-  }, [issues])
 
   const handleDragEnd = (results: DropResult) => {
     const { source, destination, draggableId } = results
@@ -76,30 +49,19 @@ export default function Project() {
       .catch(err => console.log(err))
   }
 
-  const newIssueState = (issueState: State | undefined) => {
-    setCreateIssue(issueState)
-  }
-
   const issueViewInfo = (issue: Issue) => {
     setIssueView(issue)
-  }
-
-  const addedIssue = {
-    issueFn: (newIssue: Issue) => {
-      setIssues([...issues, newIssue])
-    },
-    issueState: createIssue,
   }
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       {
         createIssue &&
-        <Modal type={"issue"} addIssue={addedIssue} closeModal={() => setCreateIssue(undefined)} />
+        <Modal type={"issue"} addIssueInfo={addIssue} closeModal={() => setCreateIssue(undefined)} />
       }
       {
         issueView &&
-        <Modal type="issueView" closeModal={() => setIssueView(undefined)} issue={issueView} />
+        <Modal type="issueView" closeModal={() => setIssueView(undefined)} deleteIssue={deleteIssue} issue={issueView} />
       }
       <div className='h-full p-8 pt-0 flex flex-col gap-2 justify-start'>
         <h1 className=' text-4xl'>{project?.name}</h1>

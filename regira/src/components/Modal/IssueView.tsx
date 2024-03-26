@@ -7,7 +7,7 @@ import Tag from '../Tags/Tag';
 
 export function IssueView(props: IssueViewType) {
 
-    const { issue, closeModal } = props
+    const { issue, closeModal, deletedIssue } = props
     const [issueTags, setIssueTags] = useState<Tags[]>([])
     const [deleteIssue, setDeleteIssue] = useState<boolean>(false)
 
@@ -22,6 +22,7 @@ export function IssueView(props: IssueViewType) {
         fetch(`http://localhost:3000/api/issues/${issue.id}`, { method: "DELETE", credentials: "include" })
             .then(resp => resp.json())
             .catch(err => console.log(err))
+        deletedIssue(issue)
         closeModal()
     }
 
@@ -47,11 +48,11 @@ export function IssueView(props: IssueViewType) {
                                 ? (<div>
                                     <h1 className='font-bold mb-2'>Seguro que quieres eliminar el Issue?</h1>
                                     <section className='flex justify-evenly'>
-                                        <h2 onClick={handleDeleteIssue} className='bg-red-700 w-10 text-center p-2 rounded text-white font-bold'>Sí</h2>
-                                        <h2 onClick={() => setDeleteIssue(false)} className='pointer bg-green-700 w-10 text-center p-2 rounded text-white font-bold'>No</h2>
+                                        <h2 onClick={handleDeleteIssue} className='cursor-pointer bg-red-700 w-10 text-center p-2 rounded text-white font-bold'>Sí</h2>
+                                        <h2 onClick={() => setDeleteIssue(false)} className='cursor-pointer bg-green-700 w-10 text-center p-2 rounded text-white font-bold'>No</h2>
                                     </section>
                                 </div>)
-                                : <h1 onClick={() => setDeleteIssue(true)} className='pointer flex items-center gap-4 bg-red-700 w-fit p-2 rounded text-white font-bold'>Delete Issue <span className='text-lg'><CiTrash /></span></h1>
+                                : <h1 onClick={() => setDeleteIssue(true)} className='cursor-pointer flex items-center gap-4 bg-red-700 w-fit p-2 rounded text-white font-bold'>Delete Issue <span className='text-lg'><CiTrash /></span></h1>
                         }
                     </li>
                     <li className='flex flex-col gap-3'>

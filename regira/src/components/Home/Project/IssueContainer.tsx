@@ -5,9 +5,7 @@ export default function IssueContainer(props: IssueContainerType) {
 
     const { issue, index, issueInfo } = props
 
-
     const { id, title, type, priority } = issue
-
 
     return (
         <Draggable draggableId={`${id}`} index={index}>

@@ -56,53 +56,58 @@ export type RegisterIn = {
     name: string;
     email: string;
     password: string;
-}
+};
+
+export type issueFun = (issue: Issue) => void;
 
 export type ModalType = {
     type: "project" | "issue" | "issueView";
     addProject?: (add: Project) => void;
     closeModal: () => void;
-    addIssue?: {
-        issueFn: (add: Issue) => void;
+    addIssueInfo?: {
+        issueFn: issueFun;
         issueState: State | undefined;
     }
+    deleteIssue?: issueFun;
     issue?: Issue;
-}
+};
 
 export type HeaderType = {
     logged: Logged;
     logout: () => void;
-}
+};
 
 export type AddProjectType = {
     addProject?: (add: Project) => void;
     closeModal: () => void;
-}
+};
 
 export type AddIssueType = {
     issueState: State | undefined;
-    addIssue?: (add: Issue) => void;
+    addIssue?: issueFun;
     closeModal: () => void;
-}
+};
 
 export type ProjectContainer = {
     project: Project
-}
+    deleteProject: (project: Project) => void;
+};
 
 export type StateContaierType = {
     title: string;
     issues: Issue[];
     createIssue?: (state: State) => void;
-    issueInfo?: (issue: Issue) => void;
-}
+    issueInfo?: issueFun;
+};
 
 export type IssueContainerType = {
     issue: Issue;
     index: number;
-    issueInfo?: (issue: Issue) => void;
-}
+    issueInfo?: issueFun;
+};
 
 export type IssueViewType = {
     issue: Issue;
+    deletedIssue: issueFun;
     closeModal: () => void;
-}
+};

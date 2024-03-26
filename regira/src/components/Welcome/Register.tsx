@@ -4,53 +4,6 @@ import { Link, useNavigate } from "react-router-dom"
 
 export function Register() {
 
-    /* const tags = [
-        "Bug",
-        "Error",
-        "Problema",
-        "Fallo",
-        "Error de código",
-        "Defecto",
-        "Problema de rendimiento",
-        "Error de diseño",
-        "Error de funcionalidad",
-        "Error crítico",
-        "Feature",
-        "Nueva característica",
-        "Mejora",
-        "Funcionalidad adicional",
-        "Solicitud de función",
-        "Requerimiento",
-        "Nuevo desarrollo",
-        "Enhancement",
-        "Funcionalidad específica",
-        "Cambio de comportamiento",
-        "Tarea",
-        "Trabajo",
-        "Subtarea",
-        "Actividad",
-        "Acción",
-        "To-Do",
-        "Trabajo pendiente",
-        "Subtarea",
-        "Trabajo asignado",
-        "Acción requerida"
-    ]
-
-    useEffect(() => {
-
-        tags.forEach(tag => {
-            fetch("http://localhost:3000/api/tags", {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: tag })
-            })
-                .then(resp => resp.json())
-                .then(data => console.log(data))
-        })
-
-    }, []) */
-
     const navigate = useNavigate()
 
     const [registerInfo, setRegisterInfo] = useState<RegisterIn>({ name: "", email: "", password: "" })

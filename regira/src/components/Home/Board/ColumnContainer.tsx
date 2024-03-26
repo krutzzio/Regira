@@ -9,11 +9,11 @@ import { CiEdit } from "react-icons/ci";
 
 export default function ColumnContainer(props: ProjectContainer) {
 
-  const { project } = props;
+  const { project, deleteProject } = props;
 
   const [columnName, setColumnName] = useState<string | undefined>(project.name)
   const [editing, setEditing] = useState<boolean>(false)
-  const [deleteProject, setDeleteProject] = useState<boolean>(false)
+  const [deleteCurrentProject, setDeleteCurrentProject] = useState<boolean>(false)
 
 
   return (
@@ -27,7 +27,7 @@ export default function ColumnContainer(props: ProjectContainer) {
         </section>
         <section className="absolute top-4 right-4 text-2xl flex justify-end gap-4 w-16">
           <CiEdit onClick={() => setEditing(true)} />
-          <CiTrash color="red" onClick={() => setDeleteProject(true)} />
+          <CiTrash color="red" onClick={() => setDeleteCurrentProject(true)} />
         </section>
       </Link>
     </div>
