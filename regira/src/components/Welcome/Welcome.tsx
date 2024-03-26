@@ -9,7 +9,7 @@ export default function Welcome() {
                 </div>
             </section>
             <section className='w-full flex flex-col justify-center items-start gap-6'>
-                <h1 className='text-7xl mr-8'>Welcome to <span className='font-bold'>Regira</span></h1>
+                <h1 className='text-7xl mr-8'>Welcome to <span className='font-bold text-8xl'>Regira</span></h1>
             </section>
         </div>
     )

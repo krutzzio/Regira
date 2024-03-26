@@ -2,8 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: "Virgil";
+    src: url("../font/Virgil.woff2");
+}
+
 :root {
     background-color: #E4E2dd;
     color: black;
-    font-family: 'Aileron', sans-serif;
+    font-family: "Virgil", 'Aileron', sans-serif;
 }
