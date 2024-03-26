@@ -1,6 +1,8 @@
 import { Draggable } from 'react-beautiful-dnd'
 import { IssueContainerType } from '../../../types'
 import bugIcon from "../../../assets/icons/bug-svgrepo-com.svg"
+import taskIcon from "../../../assets/icons/doc-svgrepo-com.svg"
+import featureIcon from "../../../assets/icons/sun-2-svgrepo-com.svg"
 
 export default function IssueContainer(props: IssueContainerType) {
 
@@ -19,8 +21,8 @@ export default function IssueContainer(props: IssueContainerType) {
                             type === "bug"
                                 ? <img src={bugIcon} alt="Bug icon" />
                                 : type === "feature"
-                                    ? <img src="/images/types/feature.png" alt="Feature icon" />
-                                    : <img src="/images/types/task.png" alt="Task icon" />
+                                    ? <img src={featureIcon} alt="Feature icon" />
+                                    : <img src={taskIcon} alt="Task icon" />
                         }
                     </div>
                 </div>

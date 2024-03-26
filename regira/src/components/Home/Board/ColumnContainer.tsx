@@ -12,21 +12,20 @@ export default function ColumnContainer(props: ProjectContainer) {
   const { project, deleteProject } = props;
 
   const [columnName, setColumnName] = useState<string | undefined>(project.name)
-  const [editing, setEditing] = useState<boolean>(false)
   const [deleteCurrentProject, setDeleteCurrentProject] = useState<boolean>(false)
 
 
   return (
-    <div className="w-full h-44 bg-white  rounded-md">
+    <div className="w-full h-36 bg-white  rounded-md">
       <Link
         to={`project/${project.id}`}
         className="block relative w-full h-full p-4">
         <section>
-          <h1>{editing ? <input type="text" autoFocus onChange={(e) => { setColumnName(e.target.value) }} onBlur={() => setEditing(false)} /> : columnName}</h1>
+          <h1 className="font-bold text-lg">{columnName}</h1>
           <p>{project.desc}</p>
         </section>
         <section className="absolute top-4 right-4 text-2xl flex justify-end gap-4 w-16">
-          <CiEdit onClick={() => setEditing(true)} />
+          <CiEdit />
           <CiTrash color="red" onClick={() => setDeleteCurrentProject(true)} />
         </section>
       </Link>
