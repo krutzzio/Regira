@@ -24,7 +24,7 @@ export default function StateContainer(props: StateContaierType) {
           </article>
           {
             createIssue &&
-            <button className='' onClick={() => createIssue(title as State)}>Add issue +</button>
+            <button className='flex gap-2 justify-center' onClick={() => createIssue(title as State)}>Add issue <span className='text-xl'>+</span></button>
           }
         </div>
       )}
