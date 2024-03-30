@@ -16,6 +16,7 @@ const {
     readItem,
     readItems,
     readItemsUser,
+    readProjectsUser,
     readItemsProject
 } = require('./generics'); // Importa les funcions per a realitzar operacions CRUD genèriques
 
@@ -64,7 +65,7 @@ const checkToken = (req, res, next) => {
 //USERS
 
 
-router.get('/users', async (req, res) => await readItems(req, res, User));
+router.get('/users', checkToken, async (req, res) => await readItems(req, res, User));
 router.get('/users/:id', async (req, res) => await readItem(req, res, User));
 router.put('/users/:id', async (req, res) => await updateItem(req, res, User));
 router.delete('/users/:id', async (req, res) => await deleteItem(req, res, User));
@@ -83,7 +84,7 @@ router.post('/login', async (req, res) => {
         }
         const token = jwt.sign({ userId: user.id, userName: user.name }, SECRET_KEY, { expiresIn: '2h' }); // Genera un token JWT vàlid durant 2 hores
         res.cookie('token', token, { httpOnly: false, maxAge: 7200000 }); // Estableix el token com una cookie
-        res.status(200).json({ message: 'LOGIN OK', name: user.name, id: user.id }); // Retorna missatge d'èxit
+        res.status(200).json({ message: 'LOGIN OK', name: user.name, id: user.id, email: user.email }); // Retorna missatge d'èxit
     } catch (error) {
         res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
     }
@@ -112,14 +113,14 @@ router.get('/refresh', checkToken, async (req, res) => {
     if (!user) {
         return res.status(404).json({ error: 'User no trobat' }); // Retorna error 404 si l'usuari no es troba
     }
-    return res.json({ id: user.id, name: user.name })
+    return res.json({ id: user.id, name: user.name, email: user.email })
 })
 
 
 //PROJECTS
 
 
-router.get('/projects', checkToken, async (req, res) => await readItemsUser(req, res, Project));
+router.get('/projects', checkToken, async (req, res) => await readProjectsUser(req, res));
 router.get('/projects/:id', checkToken, async (req, res) => await readItem(req, res, Project));
 router.put('/projects/:id', checkToken, async (req, res) => await updateItem(req, res, Project));
 router.delete('/projects/:id', checkToken, async (req, res) => await deleteItem(req, res, Project));
@@ -127,12 +128,11 @@ router.delete('/projects/:id', checkToken, async (req, res) => await deleteItem(
 // Endpoint per crear un project (amb foto) (afegit checkToken)
 router.post('/projects', checkToken, async (req, res) => {
     try {
-        const user = await User.findByPk(req.userId); // Cerca l'usuari pel seu ID
-        if (!user) {
-            return res.status(500).json({ error: 'User no trobat' }); // Retorna error 500 si no es troba l'usuari
-        }
-        const { name, desc } = req.body;
-        const project = await user.createProject({ name, desc })
+        const { name, desc, users } = req.body;
+        const selectedUsers = await User.findAll({ where: { email: users } })
+        const usersId = selectedUsers.map(user => user.id)
+        const project = await Project.create({ name, desc })
+        await project.addUsers(usersId)
         res.status(201).json(project)
     } catch (error) {
         res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error

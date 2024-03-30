@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { IoIosAdd } from "react-icons/io";
-import { CreateNewTag } from '../../types';
+import { CreateNewTag } from '../../../types';
 
 
 export default function CreateTag(props: CreateNewTag) {

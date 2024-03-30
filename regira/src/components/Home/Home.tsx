@@ -1,11 +1,12 @@
 import { useContext, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
-import Context from '../../context/AuthContext';
+import AuthContext from '../../context/AuthContext';
 import Header from './Header';
+import { AuthContextType, Logged } from '../../types';
 
 export default function Home() {
 
-    const { loggedInfo } = useContext(Context)
+    const { loggedInfo } = useContext(AuthContext) as AuthContextType
 
     const { logged, logFn, API_URL } = loggedInfo
 
@@ -13,7 +14,7 @@ export default function Home() {
         // Clear the authentication token cookie
         window.location.href = "/";
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Set the expiration date to a past date
-        logFn({ name: "", id: 0 })
+        logFn({ name: "", id: 0, email: "" })
         window.history.replaceState(null, "", "/")
     };
 
@@ -37,7 +38,7 @@ export default function Home() {
 
     return (
         <div className='flex flex-col justify-start h-screen'>
-            <Header logged={logged} logout={logout} />
+            <Header logged={logged as Logged} logout={logout} />
             <Outlet />
         </div>
     )

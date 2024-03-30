@@ -21,7 +21,7 @@ export default function ProjectsBoard() {
                     {
                         projects?.map(project => <ColumnContainer key={project.id} project={project} deleteProject={deleteProject} />)
                     }
-                    <button onClick={() => setCreateProject(true)}>Add Project</button>
+                    <button onClick={() => setCreateProject(true)}>Add project <span className='text-xl'>+</span></button>
                 </div>
             </div>
         </main>

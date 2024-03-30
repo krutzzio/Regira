@@ -65,8 +65,8 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false
     }
-},{
-    hooks:{
+}, {
+    hooks: {
         beforeCreate: async (user) => {
             const passHashed = await bcrypt.hash(user.password, 10)
             user.password = passHashed;
@@ -99,9 +99,6 @@ const Tag = sequelize.define('Tag', {
 Project.hasMany(Issue); // Un projecte pot tenir diversos issues
 Issue.belongsTo(Project); // Un issue pertany a un únic projecte
 
-User.hasMany(Project);
-Project.belongsTo(User);
-
 Issue.belongsTo(User, { as: 'author' }); // Un issue té un autor (usuari que l'ha creat)
 Issue.belongsTo(User, { as: 'assignee' }); // Un issue té un usuari assignat
 
@@ -114,6 +111,8 @@ Comment.belongsTo(User); // Un comentari pertany a un únic usuari
 Issue.belongsToMany(Tag, { through: 'IssueTag' });
 Tag.belongsToMany(Issue, { through: 'IssueTag' });
 
+User.belongsToMany(Project, { through: 'UserProject' });
+Project.belongsToMany(User, { through: 'UserProject' });
 
 
 // connectem a base de dades i creem un primer usuari

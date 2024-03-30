@@ -8,13 +8,12 @@ const API_URL = 'http://localhost:3000/api';
 
 function App() {
 
-  const [logged, setLogged] = useState<Logged | undefined>({ name: "", id: 9 })
+  const [logged, setLogged] = useState<Logged>({ name: "", id: 0, email: "" })
 
   const logFn = (logged: Logged) => {
     setLogged(logged)
   }
   const loggedInfo = { logged: logged, logFn: logFn, API_URL }
-
 
   return (
     <Context.Provider value={{ loggedInfo }}>

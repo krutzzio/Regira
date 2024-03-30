@@ -1,6 +1,6 @@
 export type AuthContextType = {
     loggedInfo: {
-        logged: Logged | undefined,
+        logged: Logged,
         logFn: (logged: Logged) => void,
         API_URL: string
     },
@@ -8,12 +8,17 @@ export type AuthContextType = {
 
 export type Id = string | number;
 
+export type User = {
+    id: Id;
+    name: string;
+    email: string;
+}
+
 export type Project = {
     id: Id;
     name: string | undefined;
     desc: string | undefined;
     active: boolean;
-    userid?: number | undefined;
 };
 
 export type State = "open" | "in_progress" | "resolved" | "closed";
@@ -49,6 +54,7 @@ export type LogIn = {
 
 export type Logged = {
     name: string;
+    email: string;
     id: number;
 };
 
@@ -81,6 +87,10 @@ export type AddProjectType = {
     addProject?: (add: Project) => void;
     closeModal: () => void;
 };
+
+export type AddNewUser = {
+    addUser: (email: string) => void;
+}
 
 export type AddIssueType = {
     issueState: State | undefined;

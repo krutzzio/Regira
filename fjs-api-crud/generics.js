@@ -2,7 +2,7 @@
 // Similar CRUD operations for Issue, User, Tag, and Comment...
 
 const { where } = require("sequelize");
-const { Project } = require("./models")
+const { Project, User } = require("./models")
 
 
 const createItem = async (req, res, Model) => {
@@ -38,6 +38,17 @@ const readItemsUser = async (req, res, Model) => {
     try {
         const item = await Model.findAll({ where: { userId: req.userId } })
         res.json(item)
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+const readProjectsUser = async (req, res) => {
+    try {
+        const user = await User.findByPk(req.userId)
+        if (!user) return res(404).json({ error: "User not found" })
+        const projects = await user.getProjects()
+        res.json(projects)
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -100,6 +111,7 @@ module.exports = {
     readItem,
     readItems,
     readItemsUser,
+    readProjectsUser,
     createTag,
     readItemsProject
 }  

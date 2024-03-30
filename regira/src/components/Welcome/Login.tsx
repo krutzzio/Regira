@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react"
-import { LogIn } from "../../types"
+import { AuthContextType, LogIn } from "../../types"
 import { Link, useNavigate } from "react-router-dom"
 import Context from "../../context/AuthContext"
 
 export default function Login() {
 
-    const { loggedInfo } = useContext(Context)
+    const { loggedInfo } = useContext(Context) as AuthContextType
 
     const navigate = useNavigate()
 
@@ -32,7 +32,7 @@ export default function Login() {
             .then(resp => resp.json())
             .then(data => {
                 if (data.error) throw new Error(data.error)
-                const lgInfo = { name: data.name, id: data.id }
+                const lgInfo = { name: data.name, id: data.id, email: data.email }
                 loggedInfo.logFn(lgInfo)
                 navigate("/home")
             })

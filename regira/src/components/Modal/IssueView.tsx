@@ -1,7 +1,7 @@
 import { IssueViewType, Tags } from '../../types'
 import { IoIosClose } from "react-icons/io";
 import { useEffect, useState } from 'react';
-import Tag from '../Tags/Tag';
+import Tag from '../Adders/Tags/Tag';
 
 
 export function IssueView(props: IssueViewType) {

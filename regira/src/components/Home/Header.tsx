@@ -3,7 +3,6 @@ import { HeaderType } from '../../types'
 
 export default function Header(props: HeaderType) {
 
-
     const { logged, logout } = props;
 
     return (

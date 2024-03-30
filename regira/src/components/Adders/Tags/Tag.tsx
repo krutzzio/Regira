@@ -1,4 +1,4 @@
-import { Tags } from '../../types'
+import { Tags } from '../../../types'
 
 export default function Tag(props: Tags) {
   return (

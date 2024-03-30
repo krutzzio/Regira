@@ -2,8 +2,8 @@ import { useState } from "react";
 import { AddIssueType, Issue, Priority, State, Tags, Type } from "../../types";
 import { useParams } from "react-router-dom";
 import { IoIosClose } from "react-icons/io";
-import CreateTag from "../Tags/CreateTag";
-import Tag from "../Tags/Tag";
+import CreateTag from "../Adders/Tags/CreateTag";
+import Tag from "../Adders/Tags/Tag";
 
 
 export function AddIssue(props: AddIssueType) {
