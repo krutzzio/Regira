@@ -153,8 +153,10 @@ router.get('/issues/:id/tags', checkToken, async (req, res) => {
     try {
         const issue = await Issue.findByPk(req.params.id)
         if (!issue) return res(404).json({ error: "Item not found" })
+        const assigneeUser = await User.findByPk(issue.assigneeId)
+        if (!assigneeUser) return res(404).json({ error: "Assigne not found" })
         const tags = await issue.getTags()
-        res.json(tags)
+        res.json({ tags, assigneeUser })
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

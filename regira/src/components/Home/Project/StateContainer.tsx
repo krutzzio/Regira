@@ -6,7 +6,7 @@ export default function StateContainer(props: StateContaierType) {
   const { title, issues, createIssue, issueInfo } = props
 
   function compareByPriority(issueA: Issue, issueB: Issue): number {
-    const priorityOrder = { "low": 1, "medium": 2, "high": 3 };
+    const priorityOrder = { "low": 3, "medium": 2, "high": 1 };
     return priorityOrder[issueA.priority] - priorityOrder[issueB.priority];
   }
   const sortedIssues = issues.slice().sort(compareByPriority);

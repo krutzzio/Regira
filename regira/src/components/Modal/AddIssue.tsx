@@ -12,7 +12,7 @@ export function AddIssue(props: AddIssueType) {
     const [newIssue, setNewIssue] = useState<Issue>({ title: "", desc: "", type: "bug", priority: "high", state: issueState as State, id: 0 })
     const [selectedTags, setSelectedTags] = useState<Tags[]>([])
 
-    const createProject = (event: React.FormEvent) => {
+    const createIssue = (event: React.FormEvent) => {
         event.preventDefault()
         if (!newIssue.title) return
 
@@ -32,8 +32,8 @@ export function AddIssue(props: AddIssueType) {
                     type: data.type,
                     priority: data.priority,
                     state: data.state,
-                    authorId: data.UserId,
-                    assigneeId: data.UserId,
+                    authorId: data.authorId,
+                    assigneeId: data.assigneeId,
                     id: data.id
                 }
 
@@ -65,10 +65,10 @@ export function AddIssue(props: AddIssueType) {
     }
 
     return (
-        <div className='z-20 relative p-4 h-fit w-3/12 bg-[#d9d5cf] rounded-lg'>
+        <div className='z-20 relative p-4 h-fit w-3/12 min-w-96 bg-[#d9d5cf] rounded-lg'>
             <h1 className='text-4xl text-center mb-8'>New Issue</h1>
             <button className='absolute top-0 right-0 text-4xl' onClick={closeModal}><IoIosClose /></button>
-            <form action='POST' className="flex flex-col gap-3" onSubmit={createProject}>
+            <form action='POST' className="flex flex-col gap-3" onSubmit={createIssue}>
                 <article>
                     <label className="block" htmlFor="title">Name</label>
                     <input autoFocus className="w-full px-2 py-1 rounded" type="text" name='title' id="title" onChange={handleChange} />
@@ -77,7 +77,7 @@ export function AddIssue(props: AddIssueType) {
                     <label className="block" htmlFor="desc">Description</label>
                     <textarea className="w-full px-2 py-1 rounded" rows={5} name='desc' id="desc" onChange={handleChange} />
                 </article>
-                <main className="w-full flex gap-4 justify-between">
+                <main className="w-full flex justify-between">
                     <section>
                         <h1>Type</h1>
                         <select name="type" id="type" value={newIssue.type} onChange={handleChange}>
