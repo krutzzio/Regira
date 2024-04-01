@@ -6,9 +6,10 @@ import { Project } from "../types"
 
 export function useProjects() {
     const [projects, setProjects] = useState<Project[]>([])
+    const [createProject, setCreateProject] = useState<boolean>(false)
+    const API_PROJECTES_URL = "http://localhost:3000/api/projects"
 
     useEffect(() => {
-        const API_PROJECTES_URL = "http://localhost:3000/api/projects"
         fetch(API_PROJECTES_URL, { credentials: 'include' })
             .then(resp => resp.json())
             .then(data => setProjects(data))
@@ -20,9 +21,12 @@ export function useProjects() {
     }
 
     const deleteProject = (currentProject: Project) => {
+        fetch(API_PROJECTES_URL + `/${currentProject.id}`, { method: "DELETE", credentials: "include" })
+            .then(resp => resp.json())
+            .catch(err => console.log(err))
         const newProjects = projects.filter(project => project.id !== currentProject.id)
         setProjects([...newProjects])
     }
 
-    return ({ projects, addProject, deleteProject })
+    return ({ projects, createProject, setCreateProject, addProject, deleteProject })
 }

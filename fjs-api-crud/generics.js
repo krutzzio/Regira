@@ -76,8 +76,6 @@ const readItem = async (req, res, Model) => {
     }
 }
 
-
-
 const updateItem = async (req, res, Model) => {
     try {
         const item = await Model.findByPk(req.params.id);
