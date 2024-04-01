@@ -1,6 +1,5 @@
 import { AuthContextType, IssueViewType, Tags, User } from '../../types'
-import { IoIosClose } from "react-icons/io";
-import { FaUserCog } from "react-icons/fa";
+import userIcon from "../../assets/icons/user.svg"
 import { useContext, useEffect, useState } from 'react';
 import Tag from '../Adders/Tags/Tag';
 import AuthContext from '../../context/AuthContext';
@@ -23,7 +22,7 @@ export function IssueView(props: IssueViewType) {
                 setAssignee(data.assigneeUser)
             })
             .catch(err => console.log(err))
-    }, [])
+    }, [issue.id])
 
     const handleDeleteIssue = () => {
         fetch(`http://localhost:3000/api/issues/${issue.id}`, { method: "DELETE", credentials: "include" })
@@ -45,19 +44,17 @@ export function IssueView(props: IssueViewType) {
             .then(data => {
                 if (data.error) throw new Error(data.error)
                 setDeleteIssue(false)
+                setAssignee(loggedInfo.logged)
             })
             .catch(err => console.log(err))
     }
+
     return (
         <div className={`z-20 relative p-4 grid grid-cols-4 gap-4 w-4/6 min-w-[30rem] h-4/6 bg-[#d9d5cf] rounded-lg border-4 ${issue.priority === "high" ? `border-red-600` : issue.priority === "medium" ? `border-amber-400` : `border-green-600`}`}>
-            <button className='absolute top-0 right-0 text-4xl' onClick={closeModal}><IoIosClose /></button>
+            <button className='absolute top-1 right-4 text-4xl' onClick={closeModal}>X</button>
             <main className='flex flex-col gap-4 col-span-3'>
                 <section className='flex items-center gap-8'>
                     <h1 className='text-2xl font-semibold'>{issue.title}</h1>
-                    <article className='flex gap-4'>
-                        <h2>State: {issue.state}</h2>
-                        <h2>Priority: {issue.priority}</h2>
-                    </article>
                 </section>
                 <section>
                     <h2 className='text-xl font-medium italic'>Description</h2>
@@ -65,17 +62,24 @@ export function IssueView(props: IssueViewType) {
                 </section>
                 <section>
                     <h1 className='text-xl font-medium italic'>Comments</h1>
+                    <textarea className='w-full p-2 resize-none' rows={3} name="" id=""></textarea>
                 </section>
             </main>
             <aside className='mt-6'>
                 <ul className='flex flex-col gap-4'>
                     <li className='flex flex-col gap-2 items-start'>
-                        <h1 className='flex items-center gap-4'><FaUserCog size={25} /> {assigne?.name}</h1>
+                        <h1 className='flex items-center gap-4 text-xl'><img className='w-6' src={userIcon} alt="User icon" /> {assigne?.name}</h1>
                         {
                             (loggedInfo.logged.id !== assigne?.id)
-                                ? <button onClick={handleAssign} className='bg-white p-1 rounded-md '>Assign issue to me</button>
+                                ? <button onClick={handleAssign} className='bg-white p-1 rounded-md'>Assign issue to me</button>
                                 : <></>
                         }
+                    </li>
+                    <li>
+                        <article className='flex flex-col items-start '>
+                            <h2>State <span className='text-xl font-bold'>{issue.state}</span></h2>
+                            <h2>Priority <span className='text-xl font-bold'>{issue.priority}</span></h2>
+                        </article>
                     </li>
                     <li className='flex flex-col gap-3'>
                         <h1 className='text-xl font-medium italic'>Tags</h1>

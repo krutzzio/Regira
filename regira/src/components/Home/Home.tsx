@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext';
 import Header from './Header';
-import { AuthContextType, Logged } from '../../types';
+import { AuthContextType, User } from '../../types';
 
 export default function Home() {
 
@@ -38,7 +38,7 @@ export default function Home() {
 
     return (
         <div className='flex flex-col justify-start h-screen'>
-            <Header logged={logged as Logged} logout={logout} />
+            <Header logged={logged as User} logout={logout} />
             <Outlet />
         </div>
     )

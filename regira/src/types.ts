@@ -1,7 +1,7 @@
 export type AuthContextType = {
     loggedInfo: {
-        logged: Logged,
-        logFn: (logged: Logged) => void,
+        logged: User,
+        logFn: (logged: User) => void,
         API_URL: string
     },
 }
@@ -52,11 +52,7 @@ export type LogIn = {
     password: string;
 };
 
-export type Logged = {
-    name: string;
-    email: string;
-    id: number;
-};
+
 
 export type RegisterIn = {
     name: string;
@@ -79,7 +75,7 @@ export type ModalType = {
 };
 
 export type HeaderType = {
-    logged: Logged;
+    logged: User;
     logout: () => void;
 };
 

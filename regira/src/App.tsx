@@ -1,16 +1,16 @@
 import './App.css'
 import { useState } from 'react'
 import Context from './context/AuthContext'
-import { Logged } from './types'
+import { User } from './types'
 import { BrowserRouter } from 'react-router-dom'
 import { Router } from './Router'
 const API_URL = 'http://localhost:3000/api';
 
 function App() {
 
-  const [logged, setLogged] = useState<Logged>({ name: "", id: 0, email: "" })
+  const [logged, setLogged] = useState<User>({ name: "", id: 0, email: "" })
 
-  const logFn = (logged: Logged) => {
+  const logFn = (logged: User) => {
     setLogged(logged)
   }
   const loggedInfo = { logged: logged, logFn: logFn, API_URL }

@@ -60,14 +60,14 @@ export function AddProject(props: AddProjectType) {
         <div className='z-20 overflow-auto flex justify-center items-center relative p-4 h-fit w-3/12 min-w-72 bg-[#d9d5cf] rounded-lg'>
             <div className="flex flex-col w-full">
                 <h1 className='text-4xl text-center mb-8'>New Project</h1>
-                <button className='absolute top-2 right-2 text-4xl' onClick={closeModal}><IoIosClose /></button>
+                <button className='absolute top-1 right-4 text-4xl' onClick={closeModal}>X</button>
                 <form action='POST' className="flex flex-col gap-4" onSubmit={createProject}>
-                    <article>
+                    <article className="text-lg">
                         <label className="block" htmlFor="name">Name</label>
                         <input className="w-full px-2 py-1 rounded" type="text" name='name' onChange={handleChange} />
                     </article>
                     <article>
-                        <label className="block" htmlFor="desc">Description</label>
+                        <label className="block text-lg" htmlFor="desc">Description</label>
                         <textarea className="w-full px-2 py-1 rounded" rows={5} name='desc' onChange={handleChange} />
                     </article>
                     <article className="flex flex-wrap gap-4">

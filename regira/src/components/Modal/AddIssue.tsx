@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { AddIssueType, Issue, Priority, State, Tags, Type } from "../../types";
 import { useParams } from "react-router-dom";
-import { IoIosClose } from "react-icons/io";
 import CreateTag from "../Adders/Tags/CreateTag";
 import Tag from "../Adders/Tags/Tag";
 
@@ -67,19 +66,19 @@ export function AddIssue(props: AddIssueType) {
     return (
         <div className='z-20 relative p-4 h-fit w-3/12 min-w-96 bg-[#d9d5cf] rounded-lg'>
             <h1 className='text-4xl text-center mb-8'>New Issue</h1>
-            <button className='absolute top-0 right-0 text-4xl' onClick={closeModal}><IoIosClose /></button>
+            <button className='absolute top-1 right-4 text-4xl' onClick={closeModal}>X</button>
             <form action='POST' className="flex flex-col gap-3" onSubmit={createIssue}>
-                <article>
+                <article className="text-xl">
                     <label className="block" htmlFor="title">Name</label>
                     <input autoFocus className="w-full px-2 py-1 rounded" type="text" name='title' id="title" onChange={handleChange} />
                 </article>
                 <article>
-                    <label className="block" htmlFor="desc">Description</label>
+                    <label className="block text-xl" htmlFor="desc">Description</label>
                     <textarea className="w-full px-2 py-1 rounded" rows={5} name='desc' id="desc" onChange={handleChange} />
                 </article>
                 <main className="w-full flex justify-between">
                     <section>
-                        <h1>Type</h1>
+                        <h1 className="text-lg mb-1">Type</h1>
                         <select name="type" id="type" value={newIssue.type} onChange={handleChange}>
                             <option value="bug">Bug</option>
                             <option value="feature">Feature</option>
@@ -87,7 +86,7 @@ export function AddIssue(props: AddIssueType) {
                         </select>
                     </section>
                     <section>
-                        <h1>Priority</h1>
+                        <h1 className="text-lg mb-1">Priority</h1>
                         <select name="priority" id="priority" value={newIssue.priority} onChange={handleChange}>
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
@@ -95,7 +94,7 @@ export function AddIssue(props: AddIssueType) {
                         </select>
                     </section>
                     <section>
-                        <h1>State</h1>
+                        <h1 className="text-lg mb-1">State</h1>
                         <select name="state" id="state" value={newIssue.state} onChange={handleChange}>
                             <option value="open">Open</option>
                             <option value="in_progress">In Progress</option>
@@ -105,7 +104,7 @@ export function AddIssue(props: AddIssueType) {
                     </section>
                 </main>
                 <section>
-                    <h1>Tags </h1>
+                    <h1 className="text-lg mb-1">Tags </h1>
                     <article className="flex flex-wrap gap-2">
                         {
                             selectedTags.map(tag => <Tag key={tag.id} id={tag.id} name={tag.name} />)
