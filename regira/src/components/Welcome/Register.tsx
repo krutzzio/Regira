@@ -20,7 +20,7 @@ export function Register() {
     const register = (event: React.FormEvent) => {
         event.preventDefault()
 
-        const API_REGISTER_URL = "http://localhost:3000/api/register"
+        const API_REGISTER_URL = "/api/register"
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

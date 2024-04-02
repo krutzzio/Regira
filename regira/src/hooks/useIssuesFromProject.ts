@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom"
 
 export function useIssuesFromProjects() {
     const { id } = useParams()
-    const API_ISSUES_URL = `http://localhost:3000/api/issues/project/${id}`
+    const API_ISSUES_URL = `/api/issues/project/${id}`
 
     const [project, setProject] = useState<Project>() //project info
     const [issues, setIssues] = useState<Issue[]>([]) //issues array of project

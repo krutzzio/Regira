@@ -21,7 +21,7 @@ export default function Login() {
     const login = (event: React.FormEvent) => {
         event.preventDefault()
 
-        const API_LOGIN_URL = "http://localhost:3000/api/login"
+        const API_LOGIN_URL = "/api/login"
 
         fetch(API_LOGIN_URL, {
             method: 'POST',

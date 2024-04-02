@@ -3,7 +3,7 @@ import { User } from "../types";
 
 export function useUsers(logged: User) {
     const [users, setUsers] = useState<User[]>([])
-    const API_USERS_URL = "http://localhost:3000/api/users"
+    const API_USERS_URL = "/api/users"
 
     useEffect(() => {
         fetch(API_USERS_URL, { credentials: "include" })

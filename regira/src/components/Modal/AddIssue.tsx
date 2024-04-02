@@ -15,7 +15,7 @@ export function AddIssue(props: AddIssueType) {
         event.preventDefault()
         if (!newIssue.title) return
 
-        const API_PROJECT_URL = `http://localhost:3000/api/issues/project/${id}`
+        const API_PROJECT_URL = `/api/issues/project/${id}`
         fetch(API_PROJECT_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

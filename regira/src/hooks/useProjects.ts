@@ -7,7 +7,7 @@ import { Project } from "../types"
 export function useProjects() {
     const [projects, setProjects] = useState<Project[]>([])
     const [createProject, setCreateProject] = useState<boolean>(false)
-    const API_PROJECTES_URL = "http://localhost:3000/api/projects"
+    const API_PROJECTES_URL = "/api/projects"
 
     useEffect(() => {
         fetch(API_PROJECTES_URL, { credentials: 'include' })

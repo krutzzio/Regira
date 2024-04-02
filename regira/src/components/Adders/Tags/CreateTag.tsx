@@ -17,7 +17,7 @@ export default function CreateTag(props: CreateNewTag) {
                         onKeyDown={e => {
                             if (e.key !== "Enter") return
                             const tagInput = e.target as HTMLTextAreaElement
-                            fetch("http://localhost:3000/api/tags", {
+                            fetch("/api/tags", {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 credentials: 'include',

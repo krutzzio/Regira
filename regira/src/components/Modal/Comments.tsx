@@ -5,7 +5,7 @@ import UserTag from "../User/UserTag"
 export default function Comments(props: CommentContainer) {
 
     const { issueId } = props
-    const API_COMMENT = `http://localhost:3000/api/comments/issue/${issueId}`
+    const API_COMMENT = `/api/comments/issue/${issueId}`
 
     const [comment, setComment] = useState<string>("")
     const [comments, setComments] = useState<Comment[]>([])

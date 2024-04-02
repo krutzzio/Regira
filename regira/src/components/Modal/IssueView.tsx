@@ -16,7 +16,7 @@ export function IssueView(props: IssueViewType) {
 
     //Get the issue tags
     useEffect(() => {
-        fetch(`http://localhost:3000/api/issues/${issue.id}/tags`, { credentials: 'include' })
+        fetch(`/api/issues/${issue.id}/tags`, { credentials: 'include' })
             .then(resp => resp.json())
             .then(data => {
                 setIssueTags(data.tags)
@@ -26,7 +26,7 @@ export function IssueView(props: IssueViewType) {
     }, [issue.id])
 
     const handleDeleteIssue = () => {
-        fetch(`http://localhost:3000/api/issues/${issue.id}`, { method: "DELETE", credentials: "include" })
+        fetch(`/api/issues/${issue.id}`, { method: "DELETE", credentials: "include" })
             .then(resp => resp.json())
             .catch(err => console.log(err))
         deletedIssue(issue)
@@ -34,7 +34,7 @@ export function IssueView(props: IssueViewType) {
     }
 
     const handleAssign = () => {
-        const API_ISSUE_URL_PUT = `http://localhost:3000/api/issues/${issue.id}`
+        const API_ISSUE_URL_PUT = `/api/issues/${issue.id}`
         fetch(API_ISSUE_URL_PUT, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },

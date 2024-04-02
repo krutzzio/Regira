@@ -3,8 +3,8 @@ const { Sequelize, DataTypes } = require('sequelize'); // Importa la llibreria S
 
 const bcrypt = require('bcrypt'); // Importa la llibreria bcrypt per a encriptar contrasenyes
 
-const sequelize = new Sequelize('regira2', 'root', '', {
-    host: 'localhost',
+const sequelize = new Sequelize('regira_g', 'root', 'admin', {
+    host: '192.168.1.158',
     port: 3306,
     dialect: 'mysql' // connectem a mysql
 });

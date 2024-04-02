@@ -4,7 +4,7 @@ import { UserTagContainer } from '../../types'
 export default function UserTag(props: UserTagContainer) {
     const { id } = props
 
-    const { user, initials } = useUser(id)
+    const {  initials } = useUser(id)
 
 
     return (

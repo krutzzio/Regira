@@ -17,7 +17,7 @@ export function AddProject(props: AddProjectType) {
         event.preventDefault()
         if (!newProject.name) return
 
-        const API_PROJECT_URL = "http://localhost:3000/api/projects"
+        const API_PROJECT_URL = "/api/projects"
 
         fetch(API_PROJECT_URL, {
             method: 'POST',

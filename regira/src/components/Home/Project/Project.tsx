@@ -34,7 +34,7 @@ export default function Project() {
         return val
       }
     })
-    const API_ISSUE_URL_PUT = `http://localhost:3000/api/issues/${itemDragged.id}`
+    const API_ISSUE_URL_PUT = `/api/issues/${itemDragged.id}`
     fetch(API_ISSUE_URL_PUT, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },

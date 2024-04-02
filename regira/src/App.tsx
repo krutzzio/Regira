@@ -4,7 +4,7 @@ import Context from './context/AuthContext'
 import { User } from './types'
 import { BrowserRouter } from 'react-router-dom'
 import { Router } from './Router'
-const API_URL = 'http://localhost:3000/api';
+const API_URL = '/api';
 
 function App() {
 
