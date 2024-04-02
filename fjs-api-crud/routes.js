@@ -17,7 +17,8 @@ const {
     readItems,
     readItemsUser,
     readProjectsUser,
-    readItemsProject
+    readItemsProject,
+    readItemsUserIssue
 } = require('./generics'); // Importa les funcions per a realitzar operacions CRUD genèriques
 
 // Configuració de multer per gestionar la pujada de fitxers
@@ -182,11 +183,26 @@ router.post('/issues/project/:projectId', checkToken, async (req, res) => {
 
 //COMMENTS
 
+router.get('/comments', checkToken, async (req, res) => await readItems(req, res, Comment));
+router.get('/comments/issue/:issueId', checkToken, async (req, res) => await readItemsUserIssue(req, res, Comment));
+router.get('/comments/:id', async (req, res) => await readItem(req, res, Comment));
+router.put('/comments/:id', async (req, res) => await updateItem(req, res, Comment));
+router.delete('/comments/:id', async (req, res) => await deleteItem(req, res, Comment));
 
-router.get('/comments', async (req, res) => await readItems(req, res, Issue));
-router.get('/comments/:id', async (req, res) => await readItem(req, res, Issue));
-router.put('/comments/:id', async (req, res) => await updateItem(req, res, Issue));
-router.delete('/comments/:id', async (req, res) => await deleteItem(req, res, Issue));
+router.post('/comments/issue/:issueId', checkToken, async (req, res) => {
+    try {
+        const { desc } = req.body
+        const issue = await Issue.findByPk(req.params.issueId); // Cerca el bolet pel seu ID
+        const user = await User.findByPk(req.userId)
+        if (!issue || !user) {
+            return res.status(404).json({ error: 'Issue o Usuari no trobats' }); // Retorna error 404 si el bolet o l'etiqueta no es troben
+        }
+        const comment = await Comment.create({ desc, UserId: req.userId, IssueId: req.params.issueId }); // Afegeix l'etiqueta al bolet
+        res.json({ message: 'Comment created', comment }); // Retorna missatge d'èxit
+    } catch (error) {
+        res.status(500).json({ error: error.message }); // Retorna error 500 amb el missatge d'error
+    }
+});
 
 
 //TAGS

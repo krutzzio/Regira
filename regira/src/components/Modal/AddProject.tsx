@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
-import { AddProjectType, AuthContextType, Logged, Project } from "../../types";
-import { IoIosClose } from "react-icons/io";
+import { AddProjectType, AuthContextType, Project, User } from "../../types";
 import AuthContext from "../../context/AuthContext";
 import { useUsers } from "../../hooks/useUsers";
 import AddUser from "../Adders/Users/AddUser";
@@ -9,7 +8,7 @@ import AddUser from "../Adders/Users/AddUser";
 export function AddProject(props: AddProjectType) {
     const { loggedInfo } = useContext(AuthContext) as AuthContextType
     const { logged } = loggedInfo
-    const { users } = useUsers(logged as Logged)
+    const { users } = useUsers(logged as User)
     const { addProject, closeModal } = props;
     const [newProject, setNewProject] = useState<Project>({ active: true, name: "", desc: "", id: 0 })
     const [selectedUsers, setSelectedUsers] = useState<string[]>([logged.email])

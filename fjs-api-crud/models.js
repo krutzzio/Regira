@@ -76,12 +76,9 @@ const User = sequelize.define('User', {
 
 // Model per a la taula Comentaris
 const Comment = sequelize.define('Comment', {
-    title: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     desc: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING(1000),
+        allowNull: false
     }
 });
 

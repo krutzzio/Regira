@@ -14,12 +14,27 @@ export type User = {
     email: string;
 }
 
+export type UserTagContainer = {
+    id: Id;
+}
+
 export type Project = {
     id: Id;
     name: string | undefined;
     desc: string | undefined;
     active: boolean;
 };
+
+export type Comment = {
+    id: Id;
+    desc: string;
+    UserId: Id;
+    IssueId: Id;
+}
+
+export type CommentContainer = {
+    issueId: Id;
+}
 
 export type State = "open" | "in_progress" | "resolved" | "closed";
 export type Type = "bug" | "feature" | "task";

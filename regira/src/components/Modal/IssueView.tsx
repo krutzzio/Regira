@@ -3,6 +3,7 @@ import userIcon from "../../assets/icons/user.svg"
 import { useContext, useEffect, useState } from 'react';
 import Tag from '../Adders/Tags/Tag';
 import AuthContext from '../../context/AuthContext';
+import Comments from './Comments';
 
 
 export function IssueView(props: IssueViewType) {
@@ -60,10 +61,7 @@ export function IssueView(props: IssueViewType) {
                     <h2 className='text-xl font-medium italic'>Description</h2>
                     <p className=''>{issue.desc}</p>
                 </section>
-                <section>
-                    <h1 className='text-xl font-medium italic'>Comments</h1>
-                    <textarea className='w-full p-2 resize-none' rows={3} name="" id=""></textarea>
-                </section>
+                <Comments issueId={issue.id} />
             </main>
             <aside className='mt-6'>
                 <ul className='flex flex-col gap-4'>
